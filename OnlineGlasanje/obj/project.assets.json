@@ -13,11 +13,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Kokor\\source\\repos\\OnlineGlasanje\\OnlineGlasanje\\OnlineGlasanje.csproj",
+      "projectUniqueName": "C:\\Users\\Kokor\\Source\\Repos\\VVS-Grupa2-Tim2\\OnlineGlasanje\\OnlineGlasanje.csproj",
       "projectName": "OnlineGlasanje",
-      "projectPath": "C:\\Users\\Kokor\\source\\repos\\OnlineGlasanje\\OnlineGlasanje\\OnlineGlasanje.csproj",
+      "projectPath": "C:\\Users\\Kokor\\Source\\Repos\\VVS-Grupa2-Tim2\\OnlineGlasanje\\OnlineGlasanje.csproj",
       "packagesPath": "C:\\Users\\Kokor\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Kokor\\source\\repos\\OnlineGlasanje\\OnlineGlasanje\\obj\\",
+      "outputPath": "C:\\Users\\Kokor\\Source\\Repos\\VVS-Grupa2-Tim2\\OnlineGlasanje\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\Kokor\\AppData\\Roaming\\NuGet\\NuGet.Config",
