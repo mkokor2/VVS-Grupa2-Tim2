@@ -78,7 +78,27 @@ namespace OnlineGlasanje
             UkupanBrojGlasova++;
             glasač.Glasao = true;
         }
+        public bool OsvojilaStranka(Stranka stranka)
+        {
+            return stranka.BrojGlasova / ukupanBrojGlasova >= 0.02;
+        }
+        public bool OsvojioNezavisni(Kandidat kandidat)
+        {
+            return kandidat.BrojGlasova / UkupanBrojGlasova >= 0.02;
+        }
+        public bool OsvojioMandatStranke(Kandidat kandidat)
+        {
+            int glasovi = 0;
+            foreach(Kandidat k in Kandidati)
+            {
+                if(k.Stranka == kandidat.Stranka)
+                {
+                    glasovi += k.BrojGlasova;
+                }
+            }
+            return kandidat.BrojGlasova >= 0.2 * glasovi;
 
+        }
         #endregion
 
     }
