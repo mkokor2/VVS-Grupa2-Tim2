@@ -80,15 +80,15 @@ namespace OnlineGlasanje
         }
         public List<Kandidat> DajKandidateStranke(Stranka s)
         {
-            List<Kandidat> list = new List<Kandidat>();
+            List<Kandidat> lista = new List<Kandidat>();
             foreach(Kandidat k in Kandidati)
             {
-                if(k.Stranka.Naziv == s.Naziv)
+                if(k.Stranka.Naziv.Equals(s.Naziv))
                 {
-                    list.Add(k);
+                    lista.Add(k);
                 }
             }
-            return list;
+            return lista;
         }
         public bool OsvojilaStranka(Stranka stranka)
         {

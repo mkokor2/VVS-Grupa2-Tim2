@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Net.Sockets;
+using System.Runtime.Versioning;
 
 namespace OnlineGlasanje
 {
@@ -16,6 +18,7 @@ namespace OnlineGlasanje
             izbori.DodajGlasača(glasač2);
             izbori.DodajGlasača(glasač3);
             izbori.DodajGlasača(glasač4);
+            Console.WriteLine(glasač1.Id);
             Kandidat nezavisni1 = new Kandidat("Petar", "Nikolić", null);
             Kandidat nezavisni2 = new Kandidat("Marija", "Borić", null);
             Kandidat nezavisni3 = new Kandidat("Muhamed", "Halkić", null);
@@ -26,6 +29,8 @@ namespace OnlineGlasanje
             izbori.DodajKandidata(nezavisni4);
             Stranka stranka1 = new Stranka("SDP");
             Stranka stranka2 = new Stranka("SBB");
+            izbori.DodajStranku(stranka1);
+            izbori.DodajStranku(stranka2);
             Kandidat kandidat1 = new Kandidat("Ivan", "Petrović", stranka1);
             Kandidat kandidat2 = new Kandidat("Lejla", "Ahmetović", stranka1);
             Kandidat kandidat3 = new Kandidat("Katarina", "Ćupić", stranka2);
@@ -58,25 +63,24 @@ namespace OnlineGlasanje
                     {
                         Console.WriteLine("Unesite redni broj kandidata za kojeg želite glasati: ");
                         int redniBroj = 1;
-                        foreach(Kandidat k in izbori.DajNezavisne())
+                        foreach (Kandidat k in izbori.DajNezavisne())
                         {
                             Console.WriteLine(redniBroj + ". " + k.Ime + " " + k.Prezime);
                             redniBroj++;
-                            int izbor = Int32.Parse(Console.ReadLine());
-                            Glasač glasac = izbori.Glasači.Find(glasač => glasač.Id == id);
-                            Kandidat kandidat = izbori.DajNezavisne()[redniBroj - 1];
-                            Kandidat stvarniKandidat = izbori.Kandidati.Find(k => k.Ime + k.Prezime == kandidat.Ime + kandidat.Prezime);
+                        }
+                        int izbor = Int32.Parse(Console.ReadLine());
+                        Glasač glasac = izbori.Glasači.Find(glasač => glasač.Id == id);
+                        Kandidat kandidat = izbori.DajNezavisne()[izbor - 1];
+                        Kandidat stvarniKandidat = izbori.Kandidati.Find(k => k.Ime + k.Prezime == kandidat.Ime + kandidat.Prezime);
 
-                            try
-                            { 
-                                izbori.GlasajZaKandidata(glasac, stvarniKandidat);
-                                Console.WriteLine("Hvala Vam na Vašem glasu!");
-                            } catch (InvalidOperationException)
-                            {
+                        try
+                        { 
+                            izbori.GlasajZaKandidata(glasac, stvarniKandidat);
+                            Console.WriteLine("Hvala Vam na Vašem glasu!");
+                        } catch (InvalidOperationException) {
                                 Console.WriteLine("Već ste glasali!");
                             }
                            
-                        }
                     }
                     else if(opcija == 2)
                     {
@@ -85,10 +89,12 @@ namespace OnlineGlasanje
                         foreach (Stranka s in izbori.Stranke)
                         {
                             Console.WriteLine(redniBroj + ". " + s.Naziv);
-                            int izbor = Int32.Parse(Console.ReadLine());
-                            Stranka stranka = izbori.Stranke[redniBroj - 1];
-                            Glasač glasac = izbori.Glasači.Find(glasač => glasač.Id == id);
-                            try
+                            redniBroj++;
+                        }
+                        int izbor = Int32.Parse(Console.ReadLine());
+                        Stranka stranka = izbori.Stranke[izbor - 1];
+                        Glasač glasac = izbori.Glasači.Find(glasač => glasač.Id == id);
+                        try
                             {
                                 izbori.GlasajZaStranku(glasac, stranka);
                                 Console.WriteLine("Hvala Vam na Vašem glasu!");
@@ -97,8 +103,6 @@ namespace OnlineGlasanje
                             {
                                 Console.WriteLine("Već ste glasali!");
                             }
-
-                        }
                     }
                     else
                     {
@@ -107,27 +111,32 @@ namespace OnlineGlasanje
                         foreach (Stranka s in izbori.Stranke)
                         {
                             Console.WriteLine(redniBroj + ". " + s.Naziv);
-                            int izbor = Int32.Parse(Console.ReadLine());
-                            Stranka stranka = izbori.Stranke[redniBroj - 1];
-                            Glasač glasac = izbori.Glasači.Find(glasač => glasač.Id == id);
-                            try
+                            redniBroj++;
+                        }
+                        int izbor = Int32.Parse(Console.ReadLine());
+                        Stranka stranka = izbori.Stranke[izbor-1];
+                        Glasač glasac = izbori.Glasači.Find(glasač => glasač.Id == id);
+
+                        Console.WriteLine(stranka.Naziv);
+                        List<Kandidat> kandidati = izbori.DajKandidateStranke(stranka);
+                        try
                             {
                                 izbori.GlasajZaStranku(glasac, stranka);
 
-                                Console.WriteLine("Unesite redne brojeve kandidata za koje želite glasati (ENTER nakon svakog rednog broja!): ");
-                                List<int> redniBrojevi = new List<int>();
+                                Console.WriteLine("Unesite redne brojeve kandidata za koje želite glasati (npr: 1 2 5): ");
+                                redniBroj = 1;
                                 foreach (Kandidat k in izbori.DajKandidateStranke(stranka))
                                 {
                                     Console.WriteLine(redniBroj + ". " + k.Ime + " " + k.Prezime);
                                     redniBroj++;
-                                    int izbor1 = Int32.Parse(Console.ReadLine());
-                                    redniBrojevi.Add(izbor1);
-                                     try
+                                    string unos = Console.ReadLine();
+                                    string[] redniBrojevi = unos.Split(' ');
+                                    try
                                     {
-                                        foreach(int i in redniBrojevi)
+                                        foreach(string i in redniBrojevi)
                                         {
-                                            Kandidat kandidat = izbori.DajKandidateStranke(stranka)[i-1];
-                                            Kandidat stvarniKandidat = izbori.Kandidati.Find(k => k.Ime + k.Prezime == kandidat.Ime + kandidat.Prezime);
+                                            Kandidat kandidat = kandidati[Int32.Parse(i)-1];
+                                            Kandidat stvarniKandidat = izbori.Kandidati.Find(k => (k.Ime + k.Prezime).Equals(kandidat.Ime + kandidat.Prezime));
                                             izbori.GlasajZaKandidata(glasac, stvarniKandidat);
 
                                         }
@@ -153,5 +162,4 @@ namespace OnlineGlasanje
             }
 
         }
-    }
 }
