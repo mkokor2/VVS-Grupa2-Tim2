@@ -42,7 +42,7 @@ namespace OnlineGlasanje
             this.datumRođenja = datumRođenja;
             this.brojLičneKarte = brojLičneKarte;
             this.matičniBroj = matičniBroj;
-            id = ime.Substring(0, 2) + prezime.Substring(0, 2) + adresa.Substring(0, 2) + datumRođenja.ToString("MM/dd/yyyy").Substring(8, 10) + brojLičneKarte.Substring(0, 2) + matičniBroj.Substring(0, 2);
+            id = ime.Substring(0, 2) + prezime.Substring(0, 2) + adresa.Substring(0, 2) + datumRođenja.ToString("MM/dd/yyyy").Substring(0, 2) + brojLičneKarte.Substring(0, 2) + matičniBroj.Substring(0, 2);
             glasao = false;
         }
 

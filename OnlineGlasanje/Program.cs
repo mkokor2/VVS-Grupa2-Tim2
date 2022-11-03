@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace OnlineGlasanje
 {
@@ -7,10 +8,10 @@ namespace OnlineGlasanje
         static void Main(string[] args)
         {
             Izbori izbori = new Izbori();
-            Glasač glasač1 = new Glasač("Marko", "Marković", "Sarajevo, Novo Sarajevo, Zmaja od Bosne bb", new DateTime(2002, 05, 09), "7043", "0509002673328");
-            Glasač glasač2 = new Glasač("Ivana", "Ivankovic", "Sarajevo, Novo Sarajevo, Žrtava fašizma 10", new DateTime(1997, 04, 09), "7943", "04099997673458");
-            Glasač glasač3 = new Glasač("Meho", "Mehić", "Sarajevo, Novo Sarajevo, Zmaja od Bosne bb", new DateTime(1968, 12, 09), "6913", "1209968612328");
-            Glasač glasač4 = new Glasač("Luka", "Lukić", "Sarajevo, Novo Sarajevo, Žrtava fašizma 16", new DateTime(1987, 04, 11), "8943", "04119987633451");
+            Glasač glasač1 = new Glasač("Marko", "Marković", "Sarajevo, Novo Sarajevo, Zmaja od Bosne bb", new DateTime(2002, 05, 09, 10, 22, 33), "7043", "0509002673328");
+            Glasač glasač2 = new Glasač("Ivana", "Ivankovic", "Sarajevo, Novo Sarajevo, Žrtava fašizma 10", new DateTime(1997, 04, 09, 10, 22, 33), "7943", "04099997673458");
+            Glasač glasač3 = new Glasač("Meho", "Mehić", "Sarajevo, Novo Sarajevo, Zmaja od Bosne bb", new DateTime(1968, 12, 09, 10, 22, 33), "6913", "1209968612328");
+            Glasač glasač4 = new Glasač("Luka", "Lukić", "Sarajevo, Novo Sarajevo, Žrtava fašizma 16", new DateTime(1987, 04, 11, 10, 22, 33), "8943", "04119987633451");
             izbori.DodajGlasača(glasač1);
             izbori.DodajGlasača(glasač2);
             izbori.DodajGlasača(glasač3);
@@ -33,6 +34,123 @@ namespace OnlineGlasanje
             izbori.DodajKandidata(kandidat2);
             izbori.DodajKandidata(kandidat3);
             izbori.DodajKandidata(kandidat4);
+            while(true)
+            {
+                Console.WriteLine("Unesite vaš glasački id (-1 za izlaz): ");
+                String id = Console.ReadLine();
+                if(id == "-1")
+                {
+                    Console.WriteLine("Hvala Vam na posjeti. Dovidjenja!");
+                    break;
+                }
+                 else if(izbori.IdentificirajGlasača(id) == false)
+                {
+                    Console.WriteLine("Glasač nije identificiran, probajte ponovo.");
+                }
+                else
+                {
+                    Console.WriteLine("Odaberite opciju: ");
+                    Console.WriteLine("1 - Glasaj za nezavisnog kandidata");
+                    Console.WriteLine("2 - Glasaj za stranku");
+                    Console.WriteLine("3 - Glasaj za stranku i njene kandidate");
+                    int opcija = Int32.Parse(Console.ReadLine());
+                    if(opcija == 1)
+                    {
+                        Console.WriteLine("Unesite redni broj kandidata za kojeg želite glasati: ");
+                        int redniBroj = 1;
+                        foreach(Kandidat k in izbori.DajNezavisne())
+                        {
+                            Console.WriteLine(redniBroj + ". " + k.Ime + " " + k.Prezime);
+                            redniBroj++;
+                            int izbor = Int32.Parse(Console.ReadLine());
+                            Glasač glasac = izbori.Glasači.Find(glasač => glasač.Id == id);
+                            Kandidat kandidat = izbori.DajNezavisne()[redniBroj - 1];
+                            Kandidat stvarniKandidat = izbori.Kandidati.Find(k => k.Ime + k.Prezime == kandidat.Ime + kandidat.Prezime);
+
+                            try
+                            { 
+                                izbori.GlasajZaKandidata(glasac, stvarniKandidat);
+                                Console.WriteLine("Hvala Vam na Vašem glasu!");
+                            } catch (InvalidOperationException)
+                            {
+                                Console.WriteLine("Već ste glasali!");
+                            }
+                           
+                        }
+                    }
+                    else if(opcija == 2)
+                    {
+                        Console.WriteLine("Unesite redni broj stranke za koju želite glasati: ");
+                        int redniBroj = 1;
+                        foreach (Stranka s in izbori.Stranke)
+                        {
+                            Console.WriteLine(redniBroj + ". " + s.Naziv);
+                            int izbor = Int32.Parse(Console.ReadLine());
+                            Stranka stranka = izbori.Stranke[redniBroj - 1];
+                            Glasač glasac = izbori.Glasači.Find(glasač => glasač.Id == id);
+                            try
+                            {
+                                izbori.GlasajZaStranku(glasac, stranka);
+                                Console.WriteLine("Hvala Vam na Vašem glasu!");
+                            }
+                            catch (InvalidOperationException)
+                            {
+                                Console.WriteLine("Već ste glasali!");
+                            }
+
+                        }
+                    }
+                    else
+                    {
+                        Console.WriteLine("Unesite redni broj stranke za koju želite glasati: ");
+                        int redniBroj = 1;
+                        foreach (Stranka s in izbori.Stranke)
+                        {
+                            Console.WriteLine(redniBroj + ". " + s.Naziv);
+                            int izbor = Int32.Parse(Console.ReadLine());
+                            Stranka stranka = izbori.Stranke[redniBroj - 1];
+                            Glasač glasac = izbori.Glasači.Find(glasač => glasač.Id == id);
+                            try
+                            {
+                                izbori.GlasajZaStranku(glasac, stranka);
+
+                                Console.WriteLine("Unesite redne brojeve kandidata za koje želite glasati (ENTER nakon svakog rednog broja!): ");
+                                List<int> redniBrojevi = new List<int>();
+                                foreach (Kandidat k in izbori.DajKandidateStranke(stranka))
+                                {
+                                    Console.WriteLine(redniBroj + ". " + k.Ime + " " + k.Prezime);
+                                    redniBroj++;
+                                    int izbor1 = Int32.Parse(Console.ReadLine());
+                                    redniBrojevi.Add(izbor1);
+                                     try
+                                    {
+                                        foreach(int i in redniBrojevi)
+                                        {
+                                            Kandidat kandidat = izbori.DajKandidateStranke(stranka)[i-1];
+                                            Kandidat stvarniKandidat = izbori.Kandidati.Find(k => k.Ime + k.Prezime == kandidat.Ime + kandidat.Prezime);
+                                            izbori.GlasajZaKandidata(glasac, stvarniKandidat);
+
+                                        }
+                                        Console.WriteLine("Hvala Vam na Vašem glasu!");
+                                    }
+                                    catch (InvalidOperationException)
+                                    {
+                                        Console.WriteLine("Već ste glasali!");
+                                    }
+
+                                }
+
+                                Console.WriteLine("Hvala Vam na Vašem glasu!");
+                            }
+                            catch (InvalidOperationException)
+                            {
+                                Console.WriteLine("Već ste glasali!");
+                            }
+
+                        }
+                    }
+                }
+            }
 
         }
     }
