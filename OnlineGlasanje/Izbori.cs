@@ -78,26 +78,30 @@ namespace OnlineGlasanje
             UkupanBrojGlasova++;
             glasač.Glasao = true;
         }
+
         public List<Kandidat> DajKandidateStranke(Stranka s)
         {
             List<Kandidat> lista = new List<Kandidat>();
             foreach(Kandidat k in Kandidati)
             {
-                if(k.Stranka.Naziv.Equals(s.Naziv))
+                if(k.Stranka != null && k.Stranka.Naziv.Equals(s.Naziv))
                 {
                     lista.Add(k);
                 }
             }
             return lista;
         }
+
         public bool OsvojilaStranka(Stranka stranka)
         {
             return stranka.BrojGlasova / ukupanBrojGlasova >= 0.02;
         }
+
         public bool OsvojioNezavisni(Kandidat kandidat)
         {
             return kandidat.BrojGlasova / UkupanBrojGlasova >= 0.02;
         }
+
         public List<Kandidat> DajNezavisne()
         {
             List<Kandidat> lista = new List<Kandidat>();
@@ -109,19 +113,19 @@ namespace OnlineGlasanje
                 }
             } return lista;
         }
+
         public bool OsvojioMandatStranke(Kandidat kandidat)
         {
             int glasovi = 0;
             foreach(Kandidat k in Kandidati)
             {
                 if(k.Stranka == kandidat.Stranka)
-                {
                     glasovi += k.BrojGlasova;
-                }
             }
             return kandidat.BrojGlasova >= 0.2 * glasovi;
 
         }
+
         #endregion
 
     }
