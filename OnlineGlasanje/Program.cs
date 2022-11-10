@@ -22,7 +22,6 @@ namespace OnlineGlasanje
             izbori.DodajGlasača(glasač2);
             izbori.DodajGlasača(glasač3);
             izbori.DodajGlasača(glasač4);
-            Console.WriteLine(glasač1.Id + " " + glasač2.Id + glasač3.Id);
             Kandidat nezavisni1 = new Kandidat("Petar", "Nikolić", null);
             Kandidat nezavisni2 = new Kandidat("Marija", "Borić", null);
             Kandidat nezavisni3 = new Kandidat("Muhamed", "Halkić", null);
