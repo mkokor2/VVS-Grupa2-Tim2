@@ -39,12 +39,24 @@ namespace OnlineGlasanje
             this.ime = ime;
             this.prezime = prezime;
             this.adresa = adresa;
-            this.datum = datumRođenja;
+            datum = datumRođenja;
             ličnaKarta = brojLičneKarte;
             this.matičniBroj = matičniBroj;
-            /* ID se automatski generiše na osnovu ličnih podatakaa glasača */
-            id = ime.Substring(0, 2) + prezime.Substring(0, 2) + adresa.Substring(0, 2) + datumRođenja.ToString("MM/dd/yyyy").Substring(0, 2) + brojLičneKarte.Substring(0, 2) + matičniBroj.Substring(0, 2);
-            glasao = false;
+            /* 
+             * ID se automatski generiše na osnovu ličnih podatakaa glasača
+             */
+            id = generisiID(ime, prezime, adresa, datumRođenja, brojLičneKarte, matičniBroj);
+             glasao = false;
+        }
+
+        #endregion
+
+        #region Pomocne Metode
+
+        public string generisiID(string ime, string prezime, string adresa, DateTime datum, string brojLicneKarte, string maticniBroj)
+        {
+            string id = ime.Substring(0, 2) + prezime.Substring(0, 2) + adresa.Substring(0, 2) + datum.ToString("MM/dd/yyyy").Substring(0, 2) + brojLicneKarte.Substring(0, 2) + matičniBroj.Substring(0, 2);
+            return id;
         }
 
         #endregion

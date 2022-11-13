@@ -33,7 +33,7 @@ namespace OnlineGlasanje
         { 
             this.ime = ime;
             this.prezime = prezime;
-            this.stranka = stranka;
+            stranka = stranka;
             brojGlasova = 0;
         }
 
