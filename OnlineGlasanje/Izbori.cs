@@ -52,9 +52,9 @@ namespace OnlineGlasanje
         public bool IdentificirajGlasača(string idGlasača)
         {
             foreach (Glasač glasač in glasači)
-                if (glasač.Id == idGlasača)
-                    return true;
-            return false;
+                if (glasač.Id != idGlasača)
+                    return false;
+            return true;
         }
 
         public void GlasajZaKandidata(Glasač glasač, Kandidat kandidat)
