@@ -122,7 +122,7 @@ namespace OnlineGlasanje
                 if(k.Stranka == kandidat.Stranka)
                     glasovi += k.BrojGlasova;
             }
-            return kandidat.BrojGlasova >= 0.2 * glasovi;
+            return kandidat.BrojGlasova >= 0.02 * glasovi;
 
         }
 
