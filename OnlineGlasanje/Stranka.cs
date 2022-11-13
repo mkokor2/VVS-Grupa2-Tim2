@@ -29,6 +29,7 @@ namespace OnlineGlasanje
         public Stranka(string naziv)
         {
             this.naziv = naziv;
+            // Broj glasova se na početku postavlja na 0.
             brojGlasova = 0;
         }
 

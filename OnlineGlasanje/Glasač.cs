@@ -11,8 +11,8 @@ namespace OnlineGlasanje
 
         #region Atributi
 
-        string ime, prezime, adresa, brojLičneKarte, matičniBroj, id;
-        DateTime datumRođenja;
+        string ime, prezime, adresa, ličnaKarta, matičniBroj, id;
+        DateTime datum;
         bool glasao;
 
         #endregion
@@ -23,8 +23,8 @@ namespace OnlineGlasanje
         public string Ime { set => ime = value;  }
         public string Prezime { set => prezime = value; }
         public string Adresa { set => adresa = value; }
-        public DateTime DatumRođenja { set => datumRođenja = value; }
-        public string BrojLičneKarte { set => brojLičneKarte = value; }
+        public DateTime Datum { set => datum = value; }
+        public string LičnaKarta { set => ličnaKarta = value; }
         public string MatičniBroj { set => matičniBroj = value; }
         public string Id { get => id; }
         public bool Glasao { get => glasao; set => glasao = value; }
@@ -39,9 +39,10 @@ namespace OnlineGlasanje
             this.ime = ime;
             this.prezime = prezime;
             this.adresa = adresa;
-            this.datumRođenja = datumRođenja;
-            this.brojLičneKarte = brojLičneKarte;
+            this.datum = datumRođenja;
+            ličnaKarta = brojLičneKarte;
             this.matičniBroj = matičniBroj;
+            /* ID se automatski generiše na osnovu ličnih podatakaa glasača */
             id = ime.Substring(0, 2) + prezime.Substring(0, 2) + adresa.Substring(0, 2) + datumRođenja.ToString("MM/dd/yyyy").Substring(0, 2) + brojLičneKarte.Substring(0, 2) + matičniBroj.Substring(0, 2);
             glasao = false;
         }

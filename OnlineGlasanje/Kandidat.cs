@@ -27,7 +27,7 @@ namespace OnlineGlasanje
         #endregion
 
 
-        #region Kosntruktor
+        #region Konstruktor
 
         public Kandidat(string ime, string prezime, Stranka stranka) 
         { 
