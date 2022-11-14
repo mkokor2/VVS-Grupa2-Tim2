@@ -156,7 +156,7 @@ namespace OnlineGlasanje
 
         static void prikažiRezultate()
         {
-            Console.WriteLine("IZLAZNOST: " + izbori.UkupanBrojGlasova + " glasača");
+            Console.WriteLine("IZLAZNOST: " + izbori.UkupanBrojGlasova + " glasača, od ukupno: " + izbori.Glasači.Count + " glasača");
             Console.WriteLine("NEZAVISNI KANDIDATI KOJI SU OSVOJILI MANDATE: ");
             int redniBroj = 1;
             izbori.DajNezavisne().ForEach(kandidat =>
