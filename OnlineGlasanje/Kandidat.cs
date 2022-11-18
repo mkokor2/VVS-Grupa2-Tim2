@@ -44,7 +44,12 @@ namespace OnlineGlasanje
         #region Metode
         public bool OsvojioMandatStranke()
         {
-            return BrojGlasova >= Stranka.BrojGlasova * 0.2;
+            if (this.Stranka != null)
+            {
+                return BrojGlasova >= Stranka.BrojGlasova * 0.2;
+            }
+            else
+                return false;
         }
 
         #endregion
