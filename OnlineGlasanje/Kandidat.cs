@@ -30,7 +30,7 @@ namespace OnlineGlasanje
 
         #region Konstruktor
 
-        public Kandidat(string ime, string prezime, Stranka stranka) 
+        public Kandidat(string ime, string prezime, Stranka stranka = null) 
         { 
             this.ime = ime;
             this.prezime = prezime;
