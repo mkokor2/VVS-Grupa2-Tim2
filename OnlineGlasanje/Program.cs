@@ -1,9 +1,11 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace OnlineGlasanje
 {
     public class Program
     {
+
         #region Atributi
 
         static Izbori izbori = new Izbori();
@@ -12,7 +14,7 @@ namespace OnlineGlasanje
 
         #region Pomoćne metode
 
-        static void napuni()
+        static void Napuni()
         {
             Glasač glasač1 = new Glasač("Marko", "Marković", "Sarajevo, Novo Sarajevo, Zmaja od Bosne bb", new DateTime(2002, 05, 09, 10, 22, 33), "7043", "0509002673328");
             Glasač glasač2 = new Glasač("Ivana", "Ivankovic", "Sarajevo, Novo Sarajevo, Žrtava fašizma 10", new DateTime(1997, 04, 09, 10, 22, 33), "7943", "04099997673458");
@@ -22,6 +24,10 @@ namespace OnlineGlasanje
             izbori.DodajGlasača(glasač2);
             izbori.DodajGlasača(glasač3);
             izbori.DodajGlasača(glasač4);
+            Console.WriteLine(glasač1.Id);
+            Console.WriteLine(glasač2.Id);
+            Console.WriteLine(glasač3.Id);
+            Console.WriteLine(glasač4.Id);
             Kandidat nezavisni1 = new Kandidat("Petar", "Nikolić", null);
             Kandidat nezavisni2 = new Kandidat("Marija", "Borić", null);
             Kandidat nezavisni3 = new Kandidat("Muhamed", "Halkić", null);
@@ -44,8 +50,13 @@ namespace OnlineGlasanje
             izbori.DodajKandidata(kandidat4);
         }
 
-        static void glasajZaNezavisnogKandidata(string idGlasača)
+        static void GlasajZaNezavisnogKandidata(string idGlasača)
         {
+            if (izbori.DajGlasača(idGlasača).Glasao)
+            {
+                Console.WriteLine("Glasač je već glasao! Ponovno glasanje nije moguće.\n");
+                return;            
+            }
             while (true)
             {
                 Console.WriteLine("\nAktuelni kandidati:");
@@ -62,22 +73,19 @@ namespace OnlineGlasanje
                     Console.WriteLine("Nepostojeći kandidat! Probajte ponovo.");
                     continue;
                 }
-                try
-                {
-                    izbori.GlasajZaKandidata(izbori.Glasači.Find(glasač => Equals(glasač.Id, idGlasača)), izbori.DajNezavisne()[Int32.Parse(redniBrojKandidata) - 1]);
-                    break;
-                }
-                catch (InvalidOperationException izuzetak)
-                {
-                    Console.Write(izuzetak.Message + " Ponovno glasanje nije moguće!");
-                    return;
-                }
+                izbori.GlasajZaKandidata(izbori.Glasači.Find(glasač => Equals(glasač.Id, idGlasača)), izbori.DajNezavisne()[Int32.Parse(redniBrojKandidata) - 1]);
+                break;
             }
             Console.WriteLine("Glasanje je uspješno zabilježeno!\n");
         }
 
-        static void glasajZaStranku(string idGlasača)
+        static void GlasajZaStranku(string idGlasača)
         {
+            if (izbori.DajGlasača(idGlasača).Glasao)
+            {
+                Console.WriteLine("Glasač je već glasao! Ponovno glasanje nije moguće.\n");
+                return;
+            }
             while (true)
             {
                 Console.WriteLine("\nAktuelne stranke:");
@@ -94,22 +102,19 @@ namespace OnlineGlasanje
                     Console.WriteLine("Nepostojeća stranka! Probajte ponovo.");
                     continue;
                 }
-                try
-                {
-                    izbori.GlasajZaStranku(izbori.Glasači.Find(glasač => Equals(glasač.Id, idGlasača)), izbori.Stranke[Int32.Parse(redniBrojStranke) - 1]);
-                    break;
-                }
-                catch (InvalidOperationException izuzetak)
-                {
-                    Console.Write(izuzetak.Message + " Ponovno glasanje nije moguće!");
-                    return;
-                }
+                izbori.GlasajZaStranku(izbori.Glasači.Find(glasač => Equals(glasač.Id, idGlasača)), izbori.Stranke[Int32.Parse(redniBrojStranke) - 1]);
+                break;
             }
             Console.WriteLine("Glasanje je uspješno zabilježeno!\n");
         }
 
-        static void glasajZaStrankuIKandidateIzNje(string idGlasača)
+        static void GlasajZaStrankuIKandidateIzNje(string idGlasača)
         {
+            if (izbori.DajGlasača(idGlasača).Glasao)
+            {
+                Console.WriteLine("Glasač je već glasao! Ponovno glasanje nije moguće.\n");
+                return;
+            }
             while (true)
             {
                 Console.WriteLine("\nAktuelne stranke:");
@@ -126,58 +131,73 @@ namespace OnlineGlasanje
                     Console.WriteLine("Nepostojeća stranka! Probajte ponovo.");
                     continue;
                 }
+                Stranka izabranaStranka = izbori.Stranke[Int32.Parse(redniBrojStranke) - 1];
                 while (true)
                 {
-                    Console.WriteLine("    Aktuelni kandidati iz odabrane stranke: ");
+                    Console.WriteLine("\n    Aktuelni kandidati iz odabrane stranke: ");
                     redniBroj = 1;
-                    izbori.DajKandidateStranke(izbori.Stranke[Int32.Parse(redniBrojStranke) - 1]).ForEach(kandidat =>
+                    List<Kandidat> kandidatiStranke = izbori.DajKandidateStranke(izabranaStranka);
+                    kandidatiStranke.ForEach(kandidat =>
                     {
                         Console.WriteLine("        " + redniBroj + ". " + kandidat.Ime + " " + kandidat.Prezime);
                         redniBroj++;
                     });
-                    Console.Write("    Unesite redni broj odabira (-1 za kraj): ");
-                    string redniBrojKandidata = Console.ReadLine();
-                    if (Equals(redniBrojKandidata, "-1"))
-                    {
-                        izbori.GlasajZaStranku(izbori.Glasači.Find(glasač => Equals(glasač.Id, idGlasača)), izbori.Stranke[Int32.Parse(redniBrojStranke) - 1]);
-                        break;
-                    }
-                    if (Int32.Parse(redniBrojKandidata) > izbori.DajKandidateStranke(izbori.Stranke[Int32.Parse(redniBrojStranke) - 1]).Count)
-                    {
-                        Console.WriteLine("Nepostojeći kandidat! Probajte ponovo.");
-                        continue;
-                    }
-                    izbori.GlasajZaKandidata(izbori.Glasači.Find(glasač => Equals(glasač.Id, idGlasača)), izbori.DajKandidateStranke(izbori.Stranke[Int32.Parse(redniBrojStranke) - 1])[Int32.Parse(redniBrojKandidata) - 1]);
+                    Console.Write("    Unesite redne brojeve odabira (npr. 1,2,3): ");
+                    string[] uneseno = Console.ReadLine().Split(",");
+                    List<int> redniBrojeviKandidata = new List<int>();
+                    bool unosKorektan = true;
+                    foreach (int broj in redniBrojeviKandidata)
+                        if (broj < 0 || broj > kandidatiStranke.Count)
+                        {
+                            unosKorektan = false;
+                            break;
+                        } 
 
+                    if (!unosKorektan)
+                    {
+                            Console.WriteLine("Unesen je nepostojeći redni broj! Probajte ponovo.");
+                            continue;
+                    }
+                    foreach (string unos in uneseno)
+                        redniBrojeviKandidata.Add(Int32.Parse(unos));
+                    foreach (string unos in uneseno)
+                        redniBrojeviKandidata.Add(Int32.Parse(unos));
+                    izbori.GlasajZaStrankuIKandidate(izbori.DajGlasača(idGlasača), izabranaStranka, izbori.DajKandidateStranke(izabranaStranka, redniBrojeviKandidata));
+                    break;
                 }
+                break;
             }
             Console.WriteLine("Glasanje je uspješno zabilježeno!\n");
         }
 
-        static void prikažiRezultate()
+        static void PrikažiRezultate()
         {
-            Console.WriteLine("IZLAZNOST: " + izbori.UkupanBrojGlasova + " glasača, od ukupno: " + izbori.Glasači.Count + " glasača");
-            Console.WriteLine("NEZAVISNI KANDIDATI KOJI SU OSVOJILI MANDATE: ");
+            Console.WriteLine("\n ## IZVJEŠTAJ ## ");
+            Console.WriteLine("-----------------");
+            Console.WriteLine("Ukupan broj glasača: " + izbori.Glasači.Count);
+            Console.WriteLine("Broj glasača koji su glasali: " + izbori.UkupanBrojGlasova);
+            Console.WriteLine("Izlaznost: " + izbori.DajIzlaznost() + "%");
+            Console.WriteLine("-----------------");
+            Console.WriteLine("Nezavisni kandidati koji su osvojili mandate: ");
             int redniBroj = 1;
             izbori.DajNezavisne().ForEach(kandidat =>
             {
-                if (izbori.OsvojioNezavisni(kandidat))
+                if (izbori.OsvojioMandat(kandidat))
                     Console.WriteLine("    " + redniBroj + ". " + kandidat.Ime + " " + kandidat.Prezime);
                 redniBroj++;
             });
-            Console.WriteLine("STRANKE I KANDIDATI STRANKE KOJI SU OSVOJILI MANDATE: ");
+            Console.WriteLine("-----------------");
+            Console.WriteLine("Stranke i kandidati stranke koji su osvojili mandate: ");
             redniBroj = 1;
-            izbori.Stranke.ForEach(stranka =>
+            izbori.DajStrankeKojeSuOsvojileMandat().ForEach(stranka =>
             {
-                if (izbori.OsvojilaStranka(stranka))
-                    Console.WriteLine("    " + redniBroj + ". " + stranka.Naziv);
-                    izbori.DajKandidateStranke(stranka).ForEach(kandidat =>
-                    {
-                        if (izbori.OsvojioMandatStranke(kandidat))
-                            Console.Write("        " + kandidat.Ime + " " + kandidat.Prezime);
-                    });
-                redniBroj++;
+                Console.WriteLine("    " + redniBroj + ". " + stranka.Naziv);
+                izbori.DajKandidateKojiSuOsvojiliMandatStranke(stranka).ForEach(kandidat =>
+                {
+                    Console.WriteLine("     " + kandidat.Ime + " " + kandidat.Prezime);
+                });
             });
+            Console.WriteLine("");
         }
 
         #endregion
@@ -186,7 +206,7 @@ namespace OnlineGlasanje
 
         static void Main(string[] args)
         {
-            napuni();
+            Napuni();
             Console.WriteLine("Dobrodošli u sistem za online glasanje!\n\n");
             while (true)
             {
@@ -198,21 +218,21 @@ namespace OnlineGlasanje
                     Console.WriteLine("Nepostojeći kod! Probajte ponovo.\n");
                     continue;
                 }
-                Console.Write("\nDostupne opcije:\n    1. Glasaj za nezavisnog kandidata\n    2. Glasaj za stranku\n    3. Glasaj za stranku i kandidate iz nje\n    4. Prikaži trenutne rezultate izbora\nUnesite redni broj odabira (1, 2 ili 3): ");
+                Console.Write("\nDostupne opcije:\n    1. Glasaj za nezavisnog kandidata\n    2. Glasaj za stranku\n    3. Glasaj za stranku i kandidate iz nje\n    4. Prikaži trenutne rezultate izbora\nUnesite redni broj odabira (1, 2, 3 ili 4): ");
                 string odabir = Console.ReadLine().Trim();
                 switch (odabir)
                 {
                     case "1":
-                        glasajZaNezavisnogKandidata(idGlasača);
+                        GlasajZaNezavisnogKandidata(idGlasača);
                         break;
                     case "2":
-                        glasajZaStranku(idGlasača);
+                        GlasajZaStranku(idGlasača);
                         break;
                     case "3":
-                        glasajZaStrankuIKandidateIzNje(idGlasača);
+                        GlasajZaStrankuIKandidateIzNje(idGlasača);
                         break;
                     case "4":
-                        prikažiRezultate();
+                        PrikažiRezultate();
                         break;
                 }
             }
@@ -220,5 +240,6 @@ namespace OnlineGlasanje
         }
 
         #endregion
+
     }
 }

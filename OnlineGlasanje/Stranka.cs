@@ -13,7 +13,6 @@ namespace OnlineGlasanje
 
         string naziv;
         int brojGlasova;
-        List<Kandidat> kandidati;
 
         #endregion
 
@@ -29,19 +28,9 @@ namespace OnlineGlasanje
         #region Konstruktor
         public Stranka(string naziv)
         {
-            this.kandidati = new List<Kandidat>();
             this.naziv = naziv;
             // Broj glasova se na početku postavlja na 0.
             brojGlasova = 0;
-        }
-
-        #endregion
-
-        #region Metode
-
-        public void DodajKandidata(Kandidat kandidat)
-        {
-            kandidati.Add(kandidat);
         }
 
         #endregion

@@ -34,25 +34,12 @@ namespace OnlineGlasanje
         { 
             this.ime = ime;
             this.prezime = prezime;
-            stranka = stranka;
+            this.stranka = stranka;
             brojGlasova = 0;
         }
 
         #endregion
 
-
-        #region Metode
-        public bool OsvojioMandatStranke()
-        {
-            if (this.Stranka != null)
-            {
-                return BrojGlasova >= Stranka.BrojGlasova * 0.2;
-            }
-            else
-                return false;
-        }
-
-        #endregion
 
     }
 }

@@ -51,6 +51,7 @@ namespace OnlineGlasanje
 
         #endregion
 
+
         #region Pomocne Metode
 
         public string generisiID(string ime, string prezime, string adresa, DateTime datum, string brojLicneKarte, string maticniBroj)

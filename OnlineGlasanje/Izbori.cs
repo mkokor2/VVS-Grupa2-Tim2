@@ -52,9 +52,9 @@ namespace OnlineGlasanje
         public bool IdentificirajGlasača(string idGlasača)
         {
             foreach (Glasač glasač in glasači)
-                if (glasač.Id != idGlasača)
-                    return false;
-            return true;
+                if (glasač.Id == idGlasača)
+                    return true;
+            return false;
         }
 
         public void GlasajZaKandidata(Glasač glasač, Kandidat kandidat)
@@ -79,27 +79,45 @@ namespace OnlineGlasanje
             glasač.Glasao = true;
         }
 
-        public List<Kandidat> DajKandidateStranke(Stranka s)
+        public void GlasajZaStrankuIKandidate(Glasač glasač, Stranka stranka, List<Kandidat> kandidati)
         {
-            List<Kandidat> lista = new List<Kandidat>();
-            foreach(Kandidat k in Kandidati)
-            {
-                if(k.Stranka != null && k.Stranka.Naziv.Equals(s.Naziv))
-                {
-                    lista.Add(k);
-                }
-            }
-            return lista;
+            if (!IdentificirajGlasača(glasač.Id))
+                throw new ArgumentException("Nevalidan glasač!");
+            if (glasač.Glasao)
+                throw new InvalidOperationException("Glasač je već glasao!");
+            stranka.BrojGlasova++;
+            foreach (Kandidat kandidat in kandidati)
+                kandidat.BrojGlasova++;
+            glasač.Glasao = true;
         }
 
-        public bool OsvojilaStranka(Stranka stranka)
+        public List<Kandidat> DajKandidateStranke(Stranka stranka, List<int> redniBrojeviKandidata)
         {
-            return stranka.BrojGlasova / ukupanBrojGlasova >= 0.02;
+            List<Kandidat> izabraniKandidati = new List<Kandidat>();
+            List<Kandidat> sviKandidati = DajKandidateStranke(stranka);
+            for (int i = 0; i < sviKandidati.Count; i++)
+                if (!izabraniKandidati.Contains(sviKandidati[i]) && redniBrojeviKandidata.Contains(i + 1))
+                    izabraniKandidati.Add(sviKandidati[i]);
+            return izabraniKandidati;
         }
 
-        public bool OsvojioNezavisni(Kandidat kandidat)
+        public List<Kandidat> DajKandidateStranke(Stranka stranka)
         {
-            return kandidat.BrojGlasova / UkupanBrojGlasova >= 0.02;
+            List<Kandidat> kandidatiStranke = new List<Kandidat>();
+            foreach(Kandidat kandidat in Kandidati)
+                if(kandidat.Stranka != null && kandidat.Stranka.Naziv.Equals(stranka.Naziv))
+                    kandidatiStranke.Add(kandidat);
+            return kandidatiStranke;
+        }
+
+        public bool OsvojilaMandat(Stranka stranka)
+        {
+            return (double)stranka.BrojGlasova / ukupanBrojGlasova >= 0.02;
+        }
+
+        public bool OsvojioMandat(Kandidat kandidat)
+        {
+            return (double)kandidat.BrojGlasova / UkupanBrojGlasova >= 0.02;
         }
 
         public List<Kandidat> DajNezavisne()
@@ -116,14 +134,40 @@ namespace OnlineGlasanje
 
         public bool OsvojioMandatStranke(Kandidat kandidat)
         {
-            int glasovi = 0;
-            foreach(Kandidat k in Kandidati)
-            {
-                if(k.Stranka == kandidat.Stranka)
-                    glasovi += k.BrojGlasova;
-            }
-            return kandidat.BrojGlasova >= 0.02 * glasovi;
+            if (kandidat.Stranka == null)
+                throw new ArgumentException("Kandidat je nezavisan!");
+            return (double)kandidat.BrojGlasova / kandidat.Stranka.BrojGlasova >= 0.2;
 
+        }
+
+        public double DajIzlaznost()
+        {
+            return ((double)UkupanBrojGlasova / Glasači.Count) * 100; 
+        }
+
+        public Glasač DajGlasača(string id)
+        {
+            return Glasači.Find(glasač => glasač.Id.Equals(id));
+        }
+
+        public List<Stranka> DajStrankeKojeSuOsvojileMandat()
+        {
+            List<Stranka> stranke = new List<Stranka>();
+            foreach (Stranka stranka in Stranke)
+                if (OsvojilaMandat(stranka))
+                    stranke.Add(stranka);
+            return stranke;
+        }
+
+        public List<Kandidat> DajKandidateKojiSuOsvojiliMandatStranke(Stranka stranka)
+        {
+            List<Kandidat> kandidati = new List<Kandidat>();
+            DajKandidateStranke(stranka).ForEach(kandidat =>
+            {
+                if (OsvojioMandat(kandidat))
+                    kandidati.Add(kandidat);
+            });
+            return kandidati;
         }
 
         #endregion
