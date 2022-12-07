@@ -5,6 +5,11 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Text.RegularExpressions;
 
+/*
+ * Elvir Vlahovljak
+ * 18702
+ */
+
 namespace OnlineGlasanje
 {
     public class Glasač
@@ -21,7 +26,19 @@ namespace OnlineGlasanje
 
         #region Properties
 
-        public string Ime { set => ime = value; }
+        public string Ime { set
+            {
+                Regex imeValidacija = new Regex(@"^[a-zA-Z\-]{2,40}$");
+
+                if (!imeValidacija.IsMatch(value))
+                {
+                    throw new ArgumentException("Ime smije sadrzavati samo slova i crticu!");
+                }
+
+                ime = value;
+            }
+            get => ime;
+        }
         public string Prezime { set => prezime = value; }
         public string Adresa { set => adresa = value; }
         public DateTime Datum { set => datum = value; }
