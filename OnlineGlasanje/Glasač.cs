@@ -63,7 +63,18 @@ namespace OnlineGlasanje
             }
             get => adresa;
         }
-        public DateTime Datum { set => datum = value; }
+        public DateTime Datum { set
+            {
+                if (value > DateTime.Now)
+                {
+                    throw new ArgumentException("Datum rodjenja ne moze biti u buducnosti!");
+                }
+                else if (value.AddYears(18) > DateTime.Now)
+                {
+                    throw new ArgumentException("Glasac mora biti punoljetan!");
+                }
+            }
+        }
         public string LičnaKarta { set => ličnaKarta = value; }
         public string MatičniBroj { set => matičniBroj = value; }
         public string Id { get => id; }
