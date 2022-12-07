@@ -30,7 +30,7 @@ namespace OnlineGlasanje
             {
                 Regex imeValidacija = new Regex(@"^[a-zA-Z\-]{2,40}$");
 
-                if (!imeValidacija.IsMatch(value))
+                if (value == null || !imeValidacija.IsMatch(value))
                 {
                     throw new ArgumentException("Ime smije sadrzavati samo slova i crticu! Ime mora biti duze od 2, a krace od 40 karaktera!");
                 }
@@ -43,7 +43,7 @@ namespace OnlineGlasanje
             {
                 Regex prezimeValidacija = new Regex(@"^[a-zA-Z\-]{3,50}$");
 
-                if (!prezimeValidacija.IsMatch(value))
+                if (value == null || !prezimeValidacija.IsMatch(value))
                 {
                     throw new ArgumentException("Prezime smije sadrzavati samo slova i crticu! Prezime mora biti duze od 3, a krace od 50 karaktera!");
                 }
