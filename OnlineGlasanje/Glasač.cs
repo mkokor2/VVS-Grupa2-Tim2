@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Text.RegularExpressions;
+using System.ComponentModel.DataAnnotations;
 
 /*
  * Elvir Vlahovljak
@@ -73,9 +74,24 @@ namespace OnlineGlasanje
                 {
                     throw new ArgumentException("Glasac mora biti punoljetan!");
                 }
+
+                datum = value;
             }
+            get => datum;
         }
-        public string LičnaKarta { set => ličnaKarta = value; }
+        public string LičnaKarta { set
+            {
+                Regex licnaKartaValidacija = new Regex(@"^[0-9]{3}[EKJMT][0-9]{3}$");
+
+                if (value != null || !licnaKartaValidacija.IsMatch(value))
+                {
+                    throw new ArgumentException("Pogresan format licne karte!");
+                }
+
+                ličnaKarta = value;
+            }
+            get => ličnaKarta;
+        }
         public string MatičniBroj { set => matičniBroj = value; }
         public string Id { get => id; }
         public bool Glasao { get => glasao; set => glasao = value; }
