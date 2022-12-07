@@ -32,7 +32,7 @@ namespace OnlineGlasanje
 
                 if (!imeValidacija.IsMatch(value))
                 {
-                    throw new ArgumentException("Ime smije sadrzavati samo slova i crticu!");
+                    throw new ArgumentException("Ime smije sadrzavati samo slova i crticu! Ime mora biti duze od 2, a krace od 40 karaktera!");
                 }
 
                 ime = value;
