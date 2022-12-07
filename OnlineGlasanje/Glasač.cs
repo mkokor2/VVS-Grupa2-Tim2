@@ -92,7 +92,47 @@ namespace OnlineGlasanje
             }
             get => ličnaKarta;
         }
-        public string MatičniBroj { set => matičniBroj = value; }
+        public string MatičniBroj { set
+            {
+                Regex maticniBrojValidacija = new Regex(@"^[0-9]{13}$");
+
+                if (value != null && !maticniBrojValidacija.IsMatch(value))
+                {
+                    throw new ArgumentException("Maticni broj mora imati tacno 13 brojeva!");
+                }
+
+                maticniBrojValidacija = new Regex(@"^([0-9]{2})([0-9]{2})([0-9]{3})[0-9]+$");
+                Match match = maticniBrojValidacija.Match(value);
+                int danUMaticnom = int.Parse(match.Groups[0].Captures[0].Value);
+                int mjesecUMaticnom = int.Parse(match.Groups[1].Captures[0].Value);
+                int godinaUMaticnom = int.Parse(match.Groups[2].Captures[0].Value);
+
+                if (godinaUMaticnom % 100 == 0) 
+                {
+                    godinaUMaticnom += 2000;
+                }
+                else
+                {
+                    godinaUMaticnom += 1000;
+                }
+
+                if (danUMaticnom != datum.Day)
+                {
+                    throw new ArgumentException("Dan u maticnom broju se ne poklapa sa danom rodjenja!");
+                }
+                else if (mjesecUMaticnom != datum.Month)
+                {
+                    throw new ArgumentException("Mjesec u maticnom broju se ne poklapa sa mjesecom rodjenja!");
+                }
+                else if (godinaUMaticnom != datum.Year)
+                {
+                    throw new ArgumentException("Godina u maticnom broju se ne poklapa sa godinom rodjenja!");
+                }
+
+                matičniBroj = value;
+            }
+            get => matičniBroj;
+        }
         public string Id { get => id; }
         public bool Glasao { get => glasao; set => glasao = value; }
 
