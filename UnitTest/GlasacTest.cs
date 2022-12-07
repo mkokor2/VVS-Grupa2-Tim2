@@ -34,5 +34,26 @@ namespace UnitTest
         {
             glasac.Ime = "$lv#r";
         }
+
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentException))]
+        public void TestImePrekratko()
+        {
+            glasac.Ime = "E";
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentException))]
+        public void TestImePredugo()
+        {
+            glasac.Ime = new string('E', 41);
+        }
+
+        [TestMethod]
+        public void TestImeIspravno()
+        {
+            glasac.Ime = "Elvirko-Nemirko";
+            Assert.AreEqual(glasac.Ime, "Elvirko-Nemirko");
+        }
     }
 }

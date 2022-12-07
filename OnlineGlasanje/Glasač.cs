@@ -39,7 +39,19 @@ namespace OnlineGlasanje
             }
             get => ime;
         }
-        public string Prezime { set => prezime = value; }
+        public string Prezime { set
+            {
+                Regex prezimeValidacija = new Regex(@"^[a-zA-Z\-]{3,50}$");
+
+                if (!prezimeValidacija.IsMatch(value))
+                {
+                    throw new ArgumentException("Prezime smije sadrzavati samo slova i crticu! Prezime mora biti duze od 3, a krace od 50 karaktera!");
+                }
+
+                prezime = value;
+            }
+            get => prezime;
+        }
         public string Adresa { set => adresa = value; }
         public DateTime Datum { set => datum = value; }
         public string LičnaKarta { set => ličnaKarta = value; }
