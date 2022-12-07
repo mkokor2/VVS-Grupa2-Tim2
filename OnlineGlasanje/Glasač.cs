@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Text.RegularExpressions;
 
 namespace OnlineGlasanje
 {
@@ -20,7 +21,7 @@ namespace OnlineGlasanje
 
         #region Properties
 
-        public string Ime { set => ime = value;  }
+        public string Ime { set => ime = value; }
         public string Prezime { set => prezime = value; }
         public string Adresa { set => adresa = value; }
         public DateTime Datum { set => datum = value; }
@@ -36,21 +37,20 @@ namespace OnlineGlasanje
 
         public Glasač(string ime, string prezime, string adresa, DateTime datumRođenja, string brojLičneKarte, string matičniBroj)
         {
-            this.ime = ime;
-            this.prezime = prezime;
-            this.adresa = adresa;
-            datum = datumRođenja;
-            ličnaKarta = brojLičneKarte;
-            this.matičniBroj = matičniBroj;
+            Ime = ime;
+            Prezime = prezime;
+            Adresa = adresa;
+            Datum = datumRođenja;
+            LičnaKarta = brojLičneKarte;
+            MatičniBroj = matičniBroj;
             /* 
              * ID se automatski generiše na osnovu ličnih podatakaa glasača
              */
-            id = generisiID(ime, prezime, adresa, datumRođenja, brojLičneKarte, matičniBroj);
-             glasao = false;
+            this.id = generisiID(ime, prezime, adresa, datumRođenja, brojLičneKarte, matičniBroj);
+            Glasao = false;
         }
 
         #endregion
-
 
         #region Pomocne Metode
 
