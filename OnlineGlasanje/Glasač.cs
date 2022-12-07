@@ -52,7 +52,17 @@ namespace OnlineGlasanje
             }
             get => prezime;
         }
-        public string Adresa { set => adresa = value; }
+        public string Adresa { set
+            {
+                if (value == null || value.Length == 0)
+                {
+                    throw new ArgumentException("Adresa prebivalista ne smije biti prazna!");
+                }
+
+                adresa = value;
+            }
+            get => adresa;
+        }
         public DateTime Datum { set => datum = value; }
         public string LičnaKarta { set => ličnaKarta = value; }
         public string MatičniBroj { set => matičniBroj = value; }
