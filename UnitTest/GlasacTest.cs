@@ -21,7 +21,8 @@ namespace UnitTest
     {
         #region Inline Testovi
 
-        //new object[] {ime, prezime, adresa, datum, licna, maticni},
+        #region Inline Podaci
+
         static IEnumerable<object[]> NeispravniGlasaci
         {
             get
@@ -73,6 +74,10 @@ namespace UnitTest
             }
         }
 
+        #endregion
+
+        #region Inline Testne Metode
+
         [TestMethod]
         [DynamicData("NeispravniGlasaci")]
         [ExpectedException(typeof(ArgumentException))]
@@ -96,6 +101,8 @@ namespace UnitTest
 
             Assert.AreEqual(glasac.Id, "ElVlTa011224");
         }
+
+        #endregion
 
         #endregion
 
