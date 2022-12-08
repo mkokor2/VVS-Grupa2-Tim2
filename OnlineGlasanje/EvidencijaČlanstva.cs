@@ -2,10 +2,11 @@
 //
 // Ova klasa je implementirana za potrebe realizacije funkcionalnosti broj 2 (iz postavke zadaće).
 // Njena je svrha da, u okviru svojih instanci, čuva bitne informacije vezane za članstvo nekog kandidata
-// u nekoj stranci.
+// u nekoj stranci (dakle, sav njezin kod je dio implementacije funkcionalnosti broj 2).
 // Autor ove klase, a i implementacije kompletne funkcionalnosti broj 2, je Matija Kokor.
 
 using System;
+using System.Globalization;
 
 namespace OnlineGlasanje
 {
@@ -41,6 +42,22 @@ namespace OnlineGlasanje
             Stranka = stranka;
             DatumPočetkaČlanstva = datumPočetkaČlanstva;
             DatumZavršetkaČlanstva = datumZavršetkaČlanstva;
+        }
+
+        #endregion
+
+
+        #region Metode
+
+        public bool daLiJeČlanstvoZavršeno()
+        {
+            return DatumZavršetkaČlanstva.Equals(default(DateTime));
+        }
+
+        public override string ToString()
+        {
+            DateTimeFormatInfo formatDatuma = (new CultureInfo("hr-HR")).DateTimeFormat;
+            return "član stranke " + Stranka.Naziv + " " + datumPočetkaČlanstva.ToString("d", formatDatuma) + ". do " + datumZavršetkaČlanstva.ToString("d", formatDatuma) + ".";
         }
 
         #endregion
