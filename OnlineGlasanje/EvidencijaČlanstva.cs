@@ -24,8 +24,8 @@ namespace OnlineGlasanje
 
         #region Properties
 
-        public Stranka Stranka { get => stranka; set => stranka = value; }
-        public DateTime DatumPočetkaČlanstva { get => datumPočetkaČlanstva; set => datumPočetkaČlanstva = value; }
+        public Stranka Stranka { get => stranka; }
+        public DateTime DatumPočetkaČlanstva { get => datumPočetkaČlanstva; }
         public DateTime DatumZavršetkaČlanstva { get => datumZavršetkaČlanstva; set => datumZavršetkaČlanstva = value; }
 
         #endregion
@@ -39,8 +39,8 @@ namespace OnlineGlasanje
         // (a što je svakako datum koji se u realnom slučaju ne bi trebao pojaviti kao validan datum završetka članstva). 
         public EvidencijaČlanstva(Stranka stranka, DateTime datumPočetkaČlanstva, DateTime datumZavršetkaČlanstva = default(DateTime))
         {
-            Stranka = stranka;
-            DatumPočetkaČlanstva = datumPočetkaČlanstva;
+            this.stranka = stranka;
+            this.datumPočetkaČlanstva = datumPočetkaČlanstva;
             DatumZavršetkaČlanstva = datumZavršetkaČlanstva;
         }
 
@@ -57,7 +57,7 @@ namespace OnlineGlasanje
         public override string ToString()
         {
             DateTimeFormatInfo formatDatuma = (new CultureInfo("hr-HR")).DateTimeFormat;
-            return "član stranke " + Stranka.Naziv + " " + datumPočetkaČlanstva.ToString("d", formatDatuma) + ". do " + datumZavršetkaČlanstva.ToString("d", formatDatuma) + ".";
+            return "član stranke " + Stranka.Naziv + " " + DatumPočetkaČlanstva.ToString("d", formatDatuma) + ". do " + DatumZavršetkaČlanstva.ToString("d", formatDatuma) + ".";
         }
 
         #endregion
