@@ -63,7 +63,7 @@ namespace UnitTest
             {
                 return new[]
                 {
-                    new object[] {"Elvirko-Nemirko", "Vlaho-vljak", "Tamo negdje 1", DateTime.Now.AddYears(-22), "123E456", "2401000150004"}
+                    new object[] {"Elvirko-Nemirko", "Vlaho-vljak", "Tamo negdje 1", DateTime.Parse("24/01/2000"), "123E456", "2401000150004"}
                 };
             }
         }
