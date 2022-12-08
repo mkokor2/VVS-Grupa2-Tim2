@@ -1,8 +1,13 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using CsvHelper;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using OnlineGlasanje;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Formats.Asn1;
+using System.Globalization;
+using System.IO;
+using System.Linq;
 
 /*
  * Elvir Vlahovljak
@@ -90,6 +95,49 @@ namespace UnitTest
             Assert.AreEqual(glasac.MatičniBroj, maticniBroj);
 
             Assert.AreEqual(glasac.Id, "ElVlTa011224");
+        }
+
+        #endregion
+
+
+        #region CSV Testovi
+
+        static IEnumerable<object[]> NeispravniGlasaciCSV
+        {
+            get
+            {
+                return UcitajPodatkeCSV();
+            }
+        }
+
+        public static IEnumerable<object[]> UcitajPodatkeCSV()
+        {
+            using (var reader = new StreamReader("Glasaci.csv"))
+            using (var csv = new CsvReader(reader, CultureInfo.InvariantCulture))
+            {
+                var rows = csv.GetRecords<dynamic>();
+                foreach (var row in rows)
+                {
+                    var values = ((IDictionary<String, Object>)row).Values;
+                    var elements = values.Select(elem => elem.ToString()).ToList();
+                    for (int i = 0; i < elements.Count; i++)
+                    {
+                        if (elements[i] == "null")
+                        {
+                            elements[i] = null;
+                        }
+                    }
+                    yield return new object[] { elements[0], elements[1], elements[2], DateTime.Parse(elements[3]), elements[4], elements[5] };
+                }
+            }
+        }
+
+        [TestMethod]
+        [DynamicData("NeispravniGlasaciCSV")]
+        [ExpectedException(typeof(ArgumentException))]
+        public void TestKonstruktoraNevalidnihGlasacaCSV(string ime, string prezime, string adresa, DateTime datum, string brojLicne, string maticniBroj)
+        {
+            Glasač glasac = new Glasač(ime, prezime, adresa, datum, brojLicne, maticniBroj);
         }
 
         #endregion
