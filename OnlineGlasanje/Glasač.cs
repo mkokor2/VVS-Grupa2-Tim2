@@ -96,7 +96,7 @@ namespace OnlineGlasanje
             {
                 Regex maticniBrojValidacija = new Regex(@"^[0-9]{13}$");
 
-                if (value != null && !maticniBrojValidacija.IsMatch(value))
+                if (value == null || !maticniBrojValidacija.IsMatch(value))
                 {
                     throw new ArgumentException("Maticni broj mora imati tacno 13 brojeva!");
                 }
