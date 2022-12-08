@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace OnlineGlasanje
+﻿namespace OnlineGlasanje
 {
     public class Kandidat
     {
