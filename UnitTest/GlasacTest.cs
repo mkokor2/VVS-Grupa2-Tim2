@@ -44,6 +44,15 @@ namespace UnitTest
                     new object[] {"Elvir", "Vlahovljak", "Tamo negdje 1", DateTime.Parse("24/01/2000"), "EEEEEEEEEE", "2401000150004" },
                     new object[] {"Elvir", "Vlahovljak", "Tamo negdje 1", DateTime.Parse("24/01/2000"), "123Q456", "2401000150004" },
                     new object[] {"Elvir", "Vlahovljak", "Tamo negdje 1", DateTime.Parse("24/01/2000"), null, "2401000150004" },
+
+                    new object[] {"Elvir", "Vlahovljak", "Tamo negdje 1", DateTime.Parse("24/01/2000"), "123E456", "123456789012345" },
+                    new object[] {"Elvir", "Vlahovljak", "Tamo negdje 1", DateTime.Parse("24/01/2000"), "123E456", "123ABC123ABC123" },
+                    new object[] {"Elvir", "Vlahovljak", "Tamo negdje 1", DateTime.Parse("24/01/2000"), "123E456", "AB$" },
+                    new object[] {"Elvir", "Vlahovljak", "Tamo negdje 1", DateTime.Parse("24/01/2000"), "123E456", "0001000150004" },
+                    new object[] {"Elvir", "Vlahovljak", "Tamo negdje 1", DateTime.Parse("24/01/2000"), "123E456", "2400000150004" },
+                    new object[] {"Elvir", "Vlahovljak", "Tamo negdje 1", DateTime.Parse("24/01/2000"), "123E456", "2401999150004" },
+                    new object[] {"Elvir", "Vlahovljak", "Tamo negdje 1", DateTime.Parse("24/01/2000"), "123E456", "" },
+                    new object[] {"Elvir", "Vlahovljak", "Tamo negdje 1", DateTime.Parse("24/01/2000"), "123E456", null },
                 };
             }
         }
