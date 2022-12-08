@@ -30,6 +30,8 @@ namespace UnitTest
                     new object[] {"Elvirko-Nemirko", "VL", "Tamo negdje 1", DateTime.Parse("24/01/2000"), "123E456", "2401000150004"},
                     new object[] {"Elvirko-Nemirko", new string('V', 51), "Tamo negdje 1", DateTime.Parse("24/01/2000"), "123E456", "2401000150004"},
                     new object[] {"Elvir", "Vlahovljak1@", "Tamo negdje 1", DateTime.Parse("24/01/2000"), "123E456", "2401000150004" },
+
+                    new object[] {"Elvir", "Vlahovljak", "", DateTime.Parse("24/01/2000"), "123E456", "2401000150004" },
                 };
             }
         }
