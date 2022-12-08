@@ -103,9 +103,9 @@ namespace OnlineGlasanje
 
                 maticniBrojValidacija = new Regex(@"^([0-9]{2})([0-9]{2})([0-9]{3})[0-9]+$");
                 Match match = maticniBrojValidacija.Match(value);
-                int danUMaticnom = int.Parse(match.Groups[0].Captures[0].Value);
-                int mjesecUMaticnom = int.Parse(match.Groups[1].Captures[0].Value);
-                int godinaUMaticnom = int.Parse(match.Groups[2].Captures[0].Value);
+                int danUMaticnom = int.Parse(match.Groups[1].Captures[0].Value);
+                int mjesecUMaticnom = int.Parse(match.Groups[2].Captures[0].Value);
+                int godinaUMaticnom = int.Parse(match.Groups[3].Captures[0].Value);
 
                 if (godinaUMaticnom % 100 == 0) 
                 {
