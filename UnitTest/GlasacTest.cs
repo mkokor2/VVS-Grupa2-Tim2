@@ -1,6 +1,8 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using OnlineGlasanje;
 using System;
+using System.Collections;
+using System.Collections.Generic;
 
 /*
  * Elvir Vlahovljak
@@ -12,48 +14,39 @@ namespace UnitTest
     [TestClass]
     public class GlasacTest
     {
-        static Glasač glasac;
+        #region Inline Testovi
 
-        [TestInitialize] 
-        public void InicijalizacijaPrijeSvakogTesta()
+        //new object[] {ime, prezime, adresa, datum, licna, maticni},
+        static IEnumerable<object[]> NeispravniGlasaci
         {
-            glasac = new Glasač("Elvir-Rivle", "Vlahovljak", "Tamo negdje 1", DateTime.Parse("24/01/2000"), "123E456", "2401000150004");
+            get
+            {
+                return new[]
+                {
+                    new object[] {"E", "Vlahovljak", "Tamo negdje 1", DateTime.Parse("24/01/2000"), "123E456", "2401000150004"},
+                    new object[] {new string('E', 41), "Vlahovljak", "Tamo negdje 1", DateTime.Parse("24/01/2000"), "123E456", "2401000150004"},
+                    new object[] {"Elvir1@", "Vlahovljak", "Tamo negdje 1", DateTime.Parse("24/01/2000"), "123E456", "2401000150004" },
+                };
+            }
         }
 
-
-        [TestMethod]
-        [ExpectedException(typeof(ArgumentException))]
-        public void TestImeSaBrojevima()
+        static IEnumerable<object[]> IspravniGlasaci
         {
-            glasac.Ime = "Elvir123";
-        }
-
-        [TestMethod]
-        [ExpectedException(typeof(ArgumentException))]
-        public void TestImeSaNeAlfanumerickimZnakovima()
-        {
-            glasac.Ime = "$lv#r";
-        }
-
-        [TestMethod]
-        [ExpectedException(typeof(ArgumentException))]
-        public void TestImePrekratko()
-        {
-            glasac.Ime = "E";
+            get
+            {
+                return new[]
+                {
+                    new object[] {"Elvirko-Nemirko"}
+                };
+            }
         }
 
         [TestMethod]
-        [ExpectedException(typeof(ArgumentException))]
-        public void TestImePredugo()
-        {
-            glasac.Ime = new string('E', 41);
-        }
+        [DynamicData(NeispravniGlasaci)]
+        [ExpectedException(ArgumentException)]
+        public void 
 
-        [TestMethod]
-        public void TestImeIspravno()
-        {
-            glasac.Ime = "Elvirko-Nemirko";
-            Assert.AreEqual(glasac.Ime, "Elvirko-Nemirko");
-        }
+        #endregion
+
     }
 }
