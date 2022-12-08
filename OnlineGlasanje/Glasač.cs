@@ -29,7 +29,7 @@ namespace OnlineGlasanje
 
         public string Ime { set
             {
-                Regex imeValidacija = new Regex(@"^[a-zA-Z\-]{2,40}$");
+                Regex imeValidacija = new Regex(@"^[\p{L}\-]{2,40}$");
 
                 if (value == null || !imeValidacija.IsMatch(value))
                 {
@@ -42,7 +42,7 @@ namespace OnlineGlasanje
         }
         public string Prezime { set
             {
-                Regex prezimeValidacija = new Regex(@"^[a-zA-Z\-]{3,50}$");
+                Regex prezimeValidacija = new Regex(@"^[\p{L}\-]{3,50}$");
 
                 if (value == null || !prezimeValidacija.IsMatch(value))
                 {
@@ -81,9 +81,9 @@ namespace OnlineGlasanje
         }
         public string LičnaKarta { set
             {
-                Regex licnaKartaValidacija = new Regex(@"^[0-9]{3}[EKJMT][0-9]{3}$");
+                Regex licnaKartaValidacija = new Regex(@"^\d{3}[EKJMT]{1}\d{3}$");
 
-                if (value != null || !licnaKartaValidacija.IsMatch(value))
+                if (value == null || !licnaKartaValidacija.IsMatch(value))
                 {
                     throw new ArgumentException("Pogresan format licne karte!");
                 }
