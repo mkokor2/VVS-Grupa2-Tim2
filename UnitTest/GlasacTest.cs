@@ -63,15 +63,34 @@ namespace UnitTest
             {
                 return new[]
                 {
-                    new object[] {"Elvirko-Nemirko"}
+                    new object[] {"Elvirko-Nemirko", "Vlaho-vljak", "Tamo negdje 1", DateTime.Now.AddYears(-22), "123E456", "2401000150004"}
                 };
             }
         }
 
         [TestMethod]
-        [DynamicData(NeispravniGlasaci)]
-        [ExpectedException(ArgumentException)]
-        public void 
+        [DynamicData("NeispravniGlasaci")]
+        [ExpectedException(typeof(ArgumentException))]
+        public void TestKonstruktoraNevalidnihGlasaca(string ime, string prezime, string adresa, DateTime datum, string brojLicne, string maticniBroj)
+        {
+            Glasač glasac = new Glasač(ime, prezime, adresa, datum, brojLicne, maticniBroj);
+        }
+
+        [TestMethod]
+        [DynamicData("IspravniGlasaci")]
+        public void TestKonstruktoraValidnihGlasaca(string ime, string prezime, string adresa, DateTime datum, string brojLicne, string maticniBroj)
+        {
+            Glasač glasac = new Glasač(ime, prezime, adresa, datum, brojLicne, maticniBroj);
+
+            Assert.AreEqual(glasac.Ime, ime);
+            Assert.AreEqual(glasac.Prezime, prezime);
+            Assert.AreEqual(glasac.Adresa, adresa);
+            Assert.AreEqual(glasac.Datum, datum);
+            Assert.AreEqual(glasac.LičnaKarta, brojLicne);
+            Assert.AreEqual(glasac.MatičniBroj, maticniBroj);
+
+            Assert.AreEqual(glasac.Id, "ElVlTa011224");
+        }
 
         #endregion
 
