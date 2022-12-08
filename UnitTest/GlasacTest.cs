@@ -17,7 +17,7 @@ namespace UnitTest
         [TestInitialize] 
         public void InicijalizacijaPrijeSvakogTesta()
         {
-            glasac = new Glasač("Elvir-Rivle", "Vlahovljak", "Tamo negdje 1", DateTime.Parse("24/01/2000"), "EJK1MTE", "2401000150004");
+            glasac = new Glasač("Elvir-Rivle", "Vlahovljak", "Tamo negdje 1", DateTime.Parse("24/01/2000"), "123E456", "2401000150004");
         }
 
 
