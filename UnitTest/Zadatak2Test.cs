@@ -20,7 +20,8 @@ namespace UnitTest
         //Pretpostavljam da ce prava metoda procesljati neku bazu podataka i traziti ima li taj IDBroj u tabeli onih koji su glasali
         //Ispade da su sasvim dovoljna 2 stub objekta i da ignorisem ovaj parametar
 
-        //Stoga cu uraditi na 2 nacina: 1 Spy i 2 Stub
+        //Medjutim, posto u tekstu zadatka pise da nije dozvoljeno kreirati vise zamjenskih objekata
+        //Ispade da je Spy najkorektnije rjesenje ovdje
 
         static IEnumerable<object[]> IspravniGlasaci
         {
@@ -83,45 +84,45 @@ namespace UnitTest
 
         //preko stubova
 
-        public class StubGlasacGlasao : IProvjera
-        {
-            public bool DaLiJeVecGlasao(string IDBroj)
-            {
-                return true;
-            }
-        }
+        //public class StubGlasacGlasao : IProvjera
+        //{
+        //    public bool DaLiJeVecGlasao(string IDBroj)
+        //    {
+        //        return true;
+        //    }
+        //}
 
-        public class StubGlasacNijeGlasao : IProvjera
-        {
-            public bool DaLiJeVecGlasao(string IDBroj)
-            {
-                return false;
-            }
-        }
+        //public class StubGlasacNijeGlasao : IProvjera
+        //{
+        //    public bool DaLiJeVecGlasao(string IDBroj)
+        //    {
+        //        return false;
+        //    }
+        //}
 
-        [TestMethod]
-        [DynamicData("IspravniGlasaci")]
-        public void TestIProvjeraGlasacNijeGlasaoStub(string ime, string prezime, string adresa, DateTime datum, string brojLicne, string maticniBroj)
-        {
-            Glasač glasac = new Glasač(ime, prezime, adresa, datum, brojLicne, maticniBroj);
+        //[TestMethod]
+        //[DynamicData("IspravniGlasaci")]
+        //public void TestIProvjeraGlasacNijeGlasaoStub(string ime, string prezime, string adresa, DateTime datum, string brojLicne, string maticniBroj)
+        //{
+        //    Glasač glasac = new Glasač(ime, prezime, adresa, datum, brojLicne, maticniBroj);
 
-            StubGlasacNijeGlasao stub = new StubGlasacNijeGlasao();
+        //    StubGlasacNijeGlasao stub = new StubGlasacNijeGlasao();
 
-            Assert.IsTrue(glasac.VjerodostojnostGlasaca(stub));
-        }
+        //    Assert.IsTrue(glasac.VjerodostojnostGlasaca(stub));
+        //}
 
-        [TestMethod]
-        [DynamicData("IspravniGlasaci")]
-        [ExpectedException(typeof(Exception))]
-        public void TestIProvjeraGlasacJesteGlasaoSpy(string ime, string prezime, string adresa, DateTime datum, string brojLicne, string maticniBroj)
-        {
+        //[TestMethod]
+        //[DynamicData("IspravniGlasaci")]
+        //[ExpectedException(typeof(Exception))]
+        //public void TestIProvjeraGlasacJesteGlasaoSpy(string ime, string prezime, string adresa, DateTime datum, string brojLicne, string maticniBroj)
+        //{
 
-            Glasač glasac = new Glasač(ime, prezime, adresa, datum, brojLicne, maticniBroj);
+        //    Glasač glasac = new Glasač(ime, prezime, adresa, datum, brojLicne, maticniBroj);
 
-            StubGlasacGlasao stub = new StubGlasacGlasao();
+        //    StubGlasacGlasao stub = new StubGlasacGlasao();
 
-            glasac.VjerodostojnostGlasaca(stub);
-        }
+        //    glasac.VjerodostojnostGlasaca(stub);
+        //}
 
         #endregion
     }
