@@ -35,5 +35,9 @@ namespace OnlineGlasanje
 
         #endregion
 
+        #region Metode
+        
+        #endregion
+
     }
 }

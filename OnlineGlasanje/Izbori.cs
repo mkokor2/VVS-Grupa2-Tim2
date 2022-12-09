@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -169,6 +170,64 @@ namespace OnlineGlasanje
             });
             return kandidati;
         }
+
+
+        //metodu napisala Nikolina Kokor u sklopu implementacije funkcionalnosti 3 sa zadace 2
+        public string ispisiKandidateStrankeKojiSuOsvojiliMandat(Stranka stranka)
+        {
+            string ispis = "\n";
+            List<Kandidat> kandidatiSMandatom = DajKandidateKojiSuOsvojiliMandatStranke(stranka);
+            for(int i = 0; i < kandidatiSMandatom.Count; i++)
+            {
+               int postotak = (kandidatiSMandatom[i].BrojGlasova / stranka.BrojGlasova) * 100;
+               ispis += kandidatiSMandatom[i].Ime + " " + kandidatiSMandatom[i].Prezime + kandidatiSMandatom[i].BrojGlasova + "glasova, što je " + postotak + "%\n";
+                
+            }
+            return ispis;
+        }
+
+        //metodu napisala Nikolina Kokor u sklopu implementacije funkcionalnosti 3 sa zadace 2
+        public int dajBrojOsvojenihMandataZaStranku(Stranka stranka)
+        {
+            return DajKandidateKojiSuOsvojiliMandatStranke(stranka).Count;
+        }
+
+        //metodu napisala Nikolina Kokor u sklopu implementacije funkcionalnosti 3 sa zadace 2
+        public string ispisiRezultatStranke(Stranka stranka)
+        {
+            int brojGlasova = stranka.BrojGlasova;
+            int postotakGlasova = brojGlasova / ukupanBrojGlasova * 100;
+            int brojOsvojenihMandata = dajBrojOsvojenihMandataZaStranku(stranka);
+            string ispis = "Naziv stranke: " + stranka.Naziv;
+            string osvojilaMandat = "DA";
+            if(OsvojilaMandat(stranka) == false)
+            {
+                osvojilaMandat = "NE";
+            }
+            ispis += "Stranka osvojila mandat: " + osvojilaMandat +"\n";
+            ispis += ("\nBroj osvojenih glasova stranke: " + brojGlasova);
+            ispis += ("\nPostotak osvojenih glasova stranke: " + postotakGlasova + "%");
+            ispis += "\nBroj kandidata koji su osvojili mandat stranke: " + brojOsvojenihMandata;
+            ispis += "\nKandidati koji su osvojili mandat: ";
+            ispis += ispisiKandidateStrankeKojiSuOsvojiliMandat(stranka);
+            return ispis;
+        }
+
+        //metodu napisala Nikolina Kokor u sklopu implementacije funkcionalnosti 3 sa zadace 2
+        public string ispisiRezultateZaStranke()
+        {
+            string ispis = "";
+            stranke.ForEach(stranka => ispis += ispisiRezultatStranke(stranka));
+            return ispis;
+        }
+
+        //metodu napisala Nikolina Kokor u sklopu implementacija funkcionalnosti 3 sa zadace 2
+        public void prikaziRezultateZaStranke()
+        {
+            Console.WriteLine(ispisiRezultateZaStranke());
+        }
+
+      
 
         #endregion
 
