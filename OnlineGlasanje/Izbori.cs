@@ -110,6 +110,7 @@ namespace OnlineGlasanje
             return kandidatiStranke;
         }
 
+
         public bool OsvojilaMandat(Stranka stranka)
         {
             return (double)stranka.BrojGlasova / ukupanBrojGlasova >= 0.02;
@@ -169,7 +170,57 @@ namespace OnlineGlasanje
             });
             return kandidati;
         }
+        //metodu napisao Admir Mehmedagić u sklopu funkcionalnosti 4
+        public List<Kandidat> DajRukovodioceStranke(Stranka stranka)
+        {
+            List<Kandidat> rukovodiociStranke = new List<Kandidat>();
+            foreach (Kandidat kandidat in Kandidati)
+                if (kandidat.Stranka != null && kandidat.Stranka.Naziv.Equals(stranka.Naziv) && kandidat.Stranka.RukovodstvoStranke.Contains(kandidat))
+                    rukovodiociStranke.Add(kandidat);
+            return rukovodiociStranke;
+        }
+        //metodu napisao Admir Mehmedagić u sklopu funkcionalnosti 4
+        public List<Kandidat> DajClanoveRukovodstvaStrankeKojiSuOsvojiliMandate(Stranka stranka)
+        {
+            {
+                List<Kandidat> rukovodioci = new List<Kandidat>();
+                DajRukovodioceStranke(stranka).ForEach(kandidat =>
+                {
+                    if (OsvojioMandat(kandidat))
+                        rukovodioci.Add(kandidat);
+                });
+                return rukovodioci;
+            }
+        }
+        //metodu napisao Admir Mehmedagić u sklopu funkcionalnosti 4
+        public int DajGlasoveRukovodstvaStranke(Stranka stranka)
+        {
+            var lista = DajClanoveRukovodstvaStrankeKojiSuOsvojiliMandate(stranka);
+            int zbir = 0;
+            foreach (Kandidat kandidat in lista) zbir += kandidat.BrojGlasova;
+            return zbir;
+        }
+        //metodu napisao Admir Mehmedagić u sklopu funkcionalnosti 4
+        public String IspisiInformacijeORukovodstvuStrankeKojiSuOsvojiliMandat(Stranka stranka)
+        {
+            var lista = DajClanoveRukovodstvaStrankeKojiSuOsvojiliMandate(stranka);
+            int ukupanBrojGlasova = DajGlasoveRukovodstvaStranke(stranka);
+            string ispis = "Ukupan broj glasova: " + ukupanBrojGlasova + "; Kandidati: ";
+            for(int i = 0; i < lista.Count; i++)
+            {
+                for(int j = 0; j < glasači.Count; j++)
+                {
+                    if (lista[i].MatičniBroj.Equals(glasači[j].MatičniBroj))
+                    {
+                        if(i == lista.Count-1)
+                        ispis += "Identifikacioni broj: " + glasači[j].Id;
+                        else ispis += "Identifikacioni broj: " + glasači[j].Id + ",";
+                    }
+                }
+            }
 
+            return ispis;
+        }
         #endregion
 
     }

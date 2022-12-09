@@ -25,7 +25,7 @@ namespace OnlineGlasanje
         public string Adresa { set => adresa = value; }
         public DateTime Datum { set => datum = value; }
         public string LičnaKarta { set => ličnaKarta = value; }
-        public string MatičniBroj { set => matičniBroj = value; }
+        public string MatičniBroj { get => matičniBroj; set => matičniBroj = value; }
         public string Id { get => id; }
         public bool Glasao { get => glasao; set => glasao = value; }
 

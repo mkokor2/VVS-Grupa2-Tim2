@@ -12,7 +12,7 @@ namespace OnlineGlasanje
 
         #region Atributi
         
-        string ime, prezime;
+        string ime, prezime, matičniBroj;
         Stranka stranka;
         int brojGlasova;
 
@@ -24,18 +24,20 @@ namespace OnlineGlasanje
         public string Prezime { get => prezime; set => prezime = value; }
         public Stranka Stranka { get => stranka; set => stranka = value; } 
         public int BrojGlasova { get => brojGlasova; set => brojGlasova = value; }
+        public string MatičniBroj { get => matičniBroj; set => matičniBroj = value; }
 
         #endregion
 
 
         #region Konstruktor
 
-        public Kandidat(string ime, string prezime, Stranka stranka = null) 
+        public Kandidat(string ime, string prezime, Stranka stranka = null, string matičniBroj = null) 
         { 
             this.ime = ime;
             this.prezime = prezime;
             this.stranka = stranka;
             brojGlasova = 0;
+            this.matičniBroj = matičniBroj;
         }
 
         #endregion
