@@ -39,15 +39,13 @@ namespace UnitTest
 
         public class SpyProvjeraStatusaGlasanjaGlasaca : IProvjera
         {
-            public string IdGlasaca { get; set; }
-
             public bool DaLiJeVecGlasao(string IDBroj)
             {
                 //Prava metoda u pravoj klasi ce vjerovatno uzeti ovaj parametar
                 //procesljati neku pazu podataka i zaista vidjeti je li glasaca glasao
 
                 //mi cemo reci da samo 1 glasac nije glasao
-                if (IdGlasaca == "ElVlTa011224")
+                if (IDBroj == "ElVlTa011224")
                     return false;
                 else return true;
             }
@@ -60,7 +58,6 @@ namespace UnitTest
             Glasač glasac = new Glasač(ime, prezime, adresa, datum, brojLicne, maticniBroj);
 
             SpyProvjeraStatusaGlasanjaGlasaca spy = new SpyProvjeraStatusaGlasanjaGlasaca();
-            spy.IdGlasaca = glasac.Id;
 
             Assert.IsTrue(glasac.VjerodostojnostGlasaca(spy));
         }
@@ -73,7 +70,6 @@ namespace UnitTest
             Glasač glasac = new Glasač("Neko", "Drugi", "Negdje tamo 1", DateTime.Parse("01/01/1999"), "444M555", "0101999000150");
 
             SpyProvjeraStatusaGlasanjaGlasaca spy = new SpyProvjeraStatusaGlasanjaGlasaca();
-            spy.IdGlasaca = glasac.Id;
 
             glasac.VjerodostojnostGlasaca(spy);
         }
