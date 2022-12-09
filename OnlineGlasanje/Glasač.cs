@@ -166,6 +166,13 @@ namespace OnlineGlasanje
             return id;
         }
 
+        public bool VjerodostojnostGlasaca(IProvjera sigurnosnaProvjera)
+        {
+            if (sigurnosnaProvjera.DaLiJeVecGlasao(id))
+                throw new Exception("Glasač je već izvršio glasanje!");
+            return true;
+        }
+
         #endregion
 
     }
