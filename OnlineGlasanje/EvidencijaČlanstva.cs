@@ -6,7 +6,6 @@
 // Autor ove klase, a i implementacije kompletne funkcionalnosti broj 2, je Matija Kokor.
 
 using System;
-using System.Globalization;
 
 namespace OnlineGlasanje
 {
@@ -41,6 +40,8 @@ namespace OnlineGlasanje
         {
             this.stranka = stranka;
             this.datumPočetkaČlanstva = datumPočetkaČlanstva;
+            if (!datumZavršetkaČlanstva.Equals(default(DateTime)) && datumZavršetkaČlanstva < datumPočetkaČlanstva)
+                throw new ArgumentException("Datum završetka članstva mora biti veći od datuma početka članstva!");
             DatumZavršetkaČlanstva = datumZavršetkaČlanstva;
         }
 
@@ -51,13 +52,12 @@ namespace OnlineGlasanje
 
         public bool daLiJeČlanstvoZavršeno()
         {
-            return DatumZavršetkaČlanstva.Equals(default(DateTime));
+            return !DatumZavršetkaČlanstva.Equals(default(DateTime));
         }
 
         public override string ToString()
         {
-            DateTimeFormatInfo formatDatuma = (new CultureInfo("hr-HR")).DateTimeFormat;
-            return "član stranke " + Stranka.Naziv + " " + DatumPočetkaČlanstva.ToString("d", formatDatuma) + ". do " + DatumZavršetkaČlanstva.ToString("d", formatDatuma) + ".";
+            return "Stranka: " + Stranka.Naziv + ", Članstvo od: " + DatumPočetkaČlanstva.ToString("dd/MM/yyyy") + ", Članstvo do: " + DatumZavršetkaČlanstva.ToString("MM/dd/yyyy");
         }
 
         #endregion

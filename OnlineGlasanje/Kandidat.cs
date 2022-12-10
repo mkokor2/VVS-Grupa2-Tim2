@@ -47,8 +47,8 @@ namespace OnlineGlasanje
 
         public Kandidat(string ime, string prezime, Stranka trenutnaStranka = null) 
         { 
-            this.ime = ime;
-            this.prezime = prezime;
+            Ime = ime;
+            Prezime = prezime;
 
             // Funkcionalnost 2 (AUTOR: Matija Kokor)
             EvidencijeČlanstava = new List<EvidencijaČlanstva>();
@@ -58,7 +58,7 @@ namespace OnlineGlasanje
                 TrenutnaStranka = null;
             //
 
-            brojGlasova = 0;
+            BrojGlasova = 0;
         }
 
         #endregion
@@ -77,6 +77,7 @@ namespace OnlineGlasanje
         {
             EvidencijeČlanstava.FindLast(evidencija => evidencija.Stranka.Naziv.Equals(TrenutnaStranka.Naziv))
                                .DatumZavršetkaČlanstva = DateTime.Now;
+            TrenutnaStranka = null;
         }
 
         public void UčlaniSe(Stranka stranka)
@@ -87,16 +88,29 @@ namespace OnlineGlasanje
             EvidencijeČlanstava.Add(new EvidencijaČlanstva(stranka, DateTime.Now));
         }
 
-        public string DajPrethodnaČlanstvaKandidata()
+        public string DajOpisKandidata()
         {
             string historijaČlanstava = "";
             EvidencijeČlanstava.ForEach(evidencija =>
             {
                 if (evidencija.daLiJeČlanstvoZavršeno())
-                    historijaČlanstava += evidencija.ToString();
+                {
+                    historijaČlanstava += "član stranke " + evidencija.Stranka.Naziv + " " + evidencija.DatumPočetkaČlanstva.ToString("dd/MM/yyyy") + ". do " + evidencija.DatumZavršetkaČlanstva.ToString("dd/MM/yyyy") + ".";
+                }
             });
             historijaČlanstava = historijaČlanstava.Equals("") ? "Kandidat nije bio član niti jedne stranke u prošlosti!" : "Kandidat je bio " + historijaČlanstava;
             return historijaČlanstava;
+        }
+
+        public List<string> DajPrethodnaČlanstvaKandidata()
+        {
+            List<string> prethodnaČlanstva = new List<string>();
+            EvidencijeČlanstava.ForEach(evidencija =>
+            {
+                if (evidencija.daLiJeČlanstvoZavršeno())
+                        prethodnaČlanstva.Add(evidencija.ToString());
+            });
+            return prethodnaČlanstva;
         }
 
         #endregion
