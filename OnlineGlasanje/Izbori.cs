@@ -87,6 +87,7 @@ namespace OnlineGlasanje
             if (glasač.Glasao)
                 throw new InvalidOperationException("Glasač je već glasao!");
             stranka.BrojGlasova++;
+            ukupanBrojGlasova++;
             foreach (Kandidat kandidat in kandidati)
                 kandidat.BrojGlasova++;
             glasač.Glasao = true;
@@ -189,11 +190,11 @@ namespace OnlineGlasanje
         //metodu napisala Nikolina Kokor u sklopu implementacije funkcionalnosti 3 sa zadace 2
         public int dajBrojOsvojenihMandataZaStranku(Stranka stranka)
         {
-            return DajKandidateKojiSuOsvojiliMandatStranke(stranka).Count;
+             return DajKandidateKojiSuOsvojiliMandatStranke(stranka).Count;
         }
 
         //metodu napisala Nikolina Kokor u sklopu implementacije funkcionalnosti 3 sa zadace 2
-        public string ispisiRezultatStranke(Stranka stranka)
+        public string ispisiRezultatZaStranku(Stranka stranka)
         {
             int brojGlasova = stranka.BrojGlasova;
             int postotakGlasova = brojGlasova / ukupanBrojGlasova * 100;
@@ -204,7 +205,7 @@ namespace OnlineGlasanje
             {
                 osvojilaMandat = "NE";
             }
-            ispis += "Stranka osvojila mandat: " + osvojilaMandat +"\n";
+            ispis += "\nStranka osvojila mandat: " + osvojilaMandat +"\n";
             ispis += ("\nBroj osvojenih glasova stranke: " + brojGlasova);
             ispis += ("\nPostotak osvojenih glasova stranke: " + postotakGlasova + "%");
             ispis += "\nBroj kandidata koji su osvojili mandat stranke: " + brojOsvojenihMandata;
@@ -214,20 +215,18 @@ namespace OnlineGlasanje
         }
 
         //metodu napisala Nikolina Kokor u sklopu implementacije funkcionalnosti 3 sa zadace 2
-        public string ispisiRezultateZaStranke()
+        public string ispisiRezultateZaSveStranke()
         {
             string ispis = "";
-            stranke.ForEach(stranka => ispis += ispisiRezultatStranke(stranka));
+            stranke.ForEach(stranka => ispis += ispisiRezultatZaStranku(stranka));
             return ispis;
         }
 
         //metodu napisala Nikolina Kokor u sklopu implementacija funkcionalnosti 3 sa zadace 2
         public void prikaziRezultateZaStranke()
         {
-            Console.WriteLine(ispisiRezultateZaStranke());
+            Console.WriteLine(ispisiRezultateZaSveStranke());
         }
-
-      
 
         #endregion
 
