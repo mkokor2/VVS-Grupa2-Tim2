@@ -212,9 +212,9 @@ namespace OnlineGlasanje
                 {
                     if (lista[i].MatičniBroj.Equals(glasači[j].MatičniBroj))
                     {
-                        if(i == lista.Count-1)
-                        ispis += "Identifikacioni broj: " + glasači[j].Id;
-                        else ispis += "Identifikacioni broj: " + glasači[j].Id + ",";
+                        if (i == lista.Count - 1) { ispis += "Identifikacioni broj: " + glasači[j].Id; }
+
+                        else { ispis += "Identifikacioni broj: " + glasači[j].Id + ","; }
                     }
                 }
             }
