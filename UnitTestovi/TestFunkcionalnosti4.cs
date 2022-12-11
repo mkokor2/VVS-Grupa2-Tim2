@@ -1,8 +1,10 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using OnlineGlasanje;
+using System;
+using System.Collections.Generic;
 using System.Security;
 
-namespace UnitTests
+namespace UnitTestovi
 {
     [TestClass]
     public class TestFunkcionalnosti4
@@ -31,11 +33,11 @@ namespace UnitTests
             izbori.DodajKandidata(kandidat2);
             izbori.DodajKandidata(kandidat3);
             izbori.DodajKandidata(kandidat4);
-            glasač1 = new Glasač("Ivan", "Petrović", "Sarajevo, Novo Sarajevo, Zmaja od Bosne bb", new DateTime(2002, 05, 09, 10, 22, 33), "7043", "0509002673328");
-            glasač2 = new Glasač("Ivana", "Ivankovic", "Sarajevo, Novo Sarajevo, Žrtava fašizma 10", new DateTime(1997, 04, 09, 10, 22, 33), "7943", "04099997673458");
-            glasač3 = new Glasač("Boris", "Kontić", "Sarajevo, Novo Sarajevo, Zmaja od Bosne bb", new DateTime(1968, 12, 09, 10, 22, 33), "6913", "1209968612328");
-            glasač4 = new Glasač("Neko", "Nekić", "Sarajevo, Novo Sarajevo, Zmaja od Bosne bb", new DateTime(1988, 12, 09, 10, 22, 33), "6923", "1209988612328");
-            glasač5 = new Glasač("Lejla", "Ahmetović", "Sarajevo, Novo Sarajevo, Zmaja od Bosne bb", new DateTime(1999, 02, 22, 10, 22, 33), "6943", "2202999100022");
+            glasač1 = new Glasač("Ivan", "Petrović", "Sarajevo, Novo Sarajevo, Zmaja od Bosne bb", new DateTime(2002, 05, 09, 10, 22, 33), "111E111", "0905002673328");
+            glasač2 = new Glasač("Ivana", "Ivankovic", "Sarajevo, Novo Sarajevo, Žrtava fašizma 10", new DateTime(1997, 04, 09, 10, 22, 33), "111E111", "0904997673458");
+            glasač3 = new Glasač("Boris", "Kontić", "Sarajevo, Novo Sarajevo, Zmaja od Bosne bb", new DateTime(1968, 12, 09, 10, 22, 33), "111E111", "0912968612328");
+            glasač4 = new Glasač("Neko", "Nekić", "Sarajevo, Novo Sarajevo, Zmaja od Bosne bb", new DateTime(1988, 12, 09, 10, 22, 33), "111E111", "0912988612328");
+            glasač5 = new Glasač("Lejla", "Ahmetović", "Sarajevo, Novo Sarajevo, Zmaja od Bosne bb", new DateTime(1999, 02, 22, 10, 22, 33), "111E111", "2202999100022");
             izbori.DodajGlasača(glasač1);
             izbori.DodajGlasača(glasač2);
             izbori.DodajGlasača(glasač3);
@@ -98,7 +100,7 @@ namespace UnitTests
         [TestMethod]
         public void ProvjeriIspis2()
         {
-            Assert.IsTrue(izbori.IspisiInformacijeORukovodstvuStrankeKojiSuOsvojiliMandat(stranka1).Contains("IvPeSa057005,"));
+            Assert.IsFalse(izbori.IspisiInformacijeORukovodstvuStrankeKojiSuOsvojiliMandat(stranka1).Contains("IvPeSa051109"));
             
         }
 

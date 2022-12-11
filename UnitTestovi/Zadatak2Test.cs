@@ -16,23 +16,18 @@ namespace UnitTestovi
     [TestClass]
     public class Zadatak2Test
     {
-        //Buni me ovaj IDBroj parametar, sta sa njim?
-        //Pretpostavljam da ce prava metoda procesljati neku bazu podataka i traziti ima li taj IDBroj u tabeli onih koji su glasali
-        //Ispade da su sasvim dovoljna 2 stub objekta i da ignorisem ovaj parametar
+        public static Glasač glasac1;
+        public static Glasač glasac2;
 
-        //Medjutim, posto u tekstu zadatka pise da nije dozvoljeno kreirati vise zamjenskih objekata
-        //Ispade da je Spy najkorektnije rjesenje ovdje
-
-        static IEnumerable<object[]> IspravniGlasaci
+        [ClassInitialize]
+        public static void ClassInit(TestContext context)
         {
-            get
-            {
-                return new[]
-                {
-                    new object[] {"Elvirko-Nemirko", "Vlaho-vljak", "Tamo negdje 1", DateTime.Parse("24/01/2000"), "123E456", "2401000150004"}
-                };
-            }
+            glasac1 = new Glasač("Neko", "Nekic", "Tamo negdje 1", DateTime.Parse("11/04/1999"), "123E456", "1104999123456");
+            glasac2 = new Glasač("Drugi", "Nekic", "Tamo negdje 1", DateTime.Parse("11/04/1999"), "123E456", "1104999123456");
         }
+
+
+        //Spy
 
         #region Spy
 
@@ -41,37 +36,20 @@ namespace UnitTestovi
         {
             public bool DaLiJeVecGlasao(string IDBroj)
             {
-                //Prava metoda u pravoj klasi ce vjerovatno uzeti ovaj parametar
-                //procesljati neku pazu podataka i zaista vidjeti je li glasaca glasao
-
-                //mi cemo reci da samo 1 glasac nije glasao
-                if (IDBroj == "ElVlTa011224")
+                if (IDBroj == "NeNeTa041211")
                     return false;
                 else return true;
             }
         }
 
         [TestMethod]
-        [DynamicData("IspravniGlasaci")]
-        public void TestIProvjeraGlasacNijeGlasaoSpy(string ime, string prezime, string adresa, DateTime datum, string brojLicne, string maticniBroj)
-        {
-            Glasač glasac = new Glasač(ime, prezime, adresa, datum, brojLicne, maticniBroj);
-
-            SpyProvjeraStatusaGlasanjaGlasaca spy = new SpyProvjeraStatusaGlasanjaGlasaca();
-
-            Assert.IsTrue(glasac.VjerodostojnostGlasaca(spy));
-        }
-
-        [TestMethod]
-        [ExpectedException(typeof(Exception))]
-        public void TestIProvjeraGlasacJesteGlasaoSpy()
+        public void TestZamjenskiObjekat()
         {
 
-            Glasač glasac = new Glasač("Neko", "Drugi", "Negdje tamo 1", DateTime.Parse("01/01/1999"), "444M555", "0101999000150");
-
             SpyProvjeraStatusaGlasanjaGlasaca spy = new SpyProvjeraStatusaGlasanjaGlasaca();
-
-            glasac.VjerodostojnostGlasaca(spy);
+            
+            Assert.IsTrue(glasac1.VjerodostojnostGlasaca(spy));
+            Assert.ThrowsException<Exception>(() => glasac2.VjerodostojnostGlasaca(spy));
         }
 
         #endregion

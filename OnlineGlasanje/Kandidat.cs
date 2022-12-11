@@ -25,6 +25,7 @@ namespace OnlineGlasanje
         string ime, prezime;
         Stranka trenutnaStranka;
         int brojGlasova;
+        string matičniBroj;
 
         // Funkcionalnost 2 (AUTOR: Matija Kokor)
         List<EvidencijaČlanstva> evidencijeČlanstava;
@@ -50,8 +51,8 @@ namespace OnlineGlasanje
 
         #region Konstruktor
 
-        public Kandidat(string ime, string prezime, Stranka trenutnaStranka = null) 
-        { 
+        public Kandidat(string ime, string prezime, Stranka trenutnaStranka = null, string matičniBroj = null)
+        {
             Ime = ime;
             Prezime = prezime;
 
@@ -64,7 +65,8 @@ namespace OnlineGlasanje
             //
 
             BrojGlasova = 0;
-        }
+            this.matičniBroj = matičniBroj;
+         }
 
         #endregion
 
