@@ -105,7 +105,7 @@ namespace OnlineGlasanje
         {
             List<Kandidat> kandidatiStranke = new List<Kandidat>();
             foreach(Kandidat kandidat in Kandidati)
-                if(kandidat.Stranka != null && kandidat.Stranka.Naziv.Equals(stranka.Naziv))
+                if(kandidat.TrenutnaStranka != null && kandidat.TrenutnaStranka.Naziv.Equals(stranka.Naziv))
                     kandidatiStranke.Add(kandidat);
             return kandidatiStranke;
         }
@@ -125,7 +125,7 @@ namespace OnlineGlasanje
             List<Kandidat> lista = new List<Kandidat>();
             foreach(Kandidat k in Kandidati)
             {
-                if(k.Stranka==null)
+                if(k.TrenutnaStranka==null)
                 {
                     lista.Add(k);
                 }
@@ -134,9 +134,9 @@ namespace OnlineGlasanje
 
         public bool OsvojioMandatStranke(Kandidat kandidat)
         {
-            if (kandidat.Stranka == null)
+            if (kandidat.TrenutnaStranka == null)
                 throw new ArgumentException("Kandidat je nezavisan!");
-            return (double)kandidat.BrojGlasova / kandidat.Stranka.BrojGlasova >= 0.2;
+            return (double)kandidat.BrojGlasova / kandidat.TrenutnaStranka.BrojGlasova >= 0.2;
 
         }
 
