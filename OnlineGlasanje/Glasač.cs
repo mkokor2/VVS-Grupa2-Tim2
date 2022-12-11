@@ -107,7 +107,7 @@ namespace OnlineGlasanje
                 int mjesecUMaticnom = int.Parse(match.Groups[2].Captures[0].Value);
                 int godinaUMaticnom = int.Parse(match.Groups[3].Captures[0].Value);
 
-                if (godinaUMaticnom % 100 == 0) 
+                if (godinaUMaticnom % 100 == 0 || godinaUMaticnom < 100) 
                 {
                     godinaUMaticnom += 2000;
                 }

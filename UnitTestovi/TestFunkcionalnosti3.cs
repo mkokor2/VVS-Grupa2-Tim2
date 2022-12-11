@@ -1,6 +1,11 @@
 ﻿using CsvHelper;
 using OnlineGlasanje;
 using System.Globalization;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System.Collections.Generic;
+using System;
+using System.IO;
+using System.Linq;
 
 namespace UnitTestovi
 
@@ -34,9 +39,9 @@ namespace UnitTestovi
             izbori.DodajKandidata(kandidat2);
             izbori.DodajKandidata(kandidat3);
             izbori.DodajKandidata(kandidat4);
-            glasač1 = new Glasač("Marko", "Marković", "Sarajevo, Novo Sarajevo, Zmaja od Bosne bb", new DateTime(2002, 05, 09, 10, 22, 33), "7043", "0509002673328");
-            glasač2 = new Glasač("Ivana", "Ivankovic", "Sarajevo, Novo Sarajevo, Žrtava fašizma 10", new DateTime(1997, 04, 09, 10, 22, 33), "7943", "04099997673458");
-            glasač3 = new Glasač("Meho", "Mehić", "Sarajevo, Novo Sarajevo, Zmaja od Bosne bb", new DateTime(1968, 12, 09, 10, 22, 33), "6913", "1209968612328");
+            glasač1 = new Glasač("Marko", "Marković", "Sarajevo, Novo Sarajevo, Zmaja od Bosne bb", new DateTime(2002, 05, 09, 10, 22, 33), "123E456", "0905002673328");
+            glasač2 = new Glasač("Ivana", "Ivankovic", "Sarajevo, Novo Sarajevo, Žrtava fašizma 10", new DateTime(1997, 04, 09, 10, 22, 33), "654M321", "0904997767345");
+            glasač3 = new Glasač("Meho", "Mehić", "Sarajevo, Novo Sarajevo, Zmaja od Bosne bb", new DateTime(1968, 12, 09, 10, 22, 33), "135K991", "0912968612328");
             izbori.DodajGlasača(glasač1);
             izbori.DodajGlasača(glasač2);
             izbori.DodajGlasača(glasač3);
