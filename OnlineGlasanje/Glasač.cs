@@ -7,6 +7,7 @@ using System.Text.RegularExpressions;
 using System.ComponentModel.DataAnnotations;
 
 /*
+ * Funkcionalnost 1
  * Elvir Vlahovljak
  * 18702
  */
