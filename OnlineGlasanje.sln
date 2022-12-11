@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.3.32929.385
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OnlineGlasanje", "OnlineGlasanje\OnlineGlasanje.csproj", "{BC49C175-F865-4E8E-B394-2CD91614A996}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OnlineGlasanje", "OnlineGlasanje\OnlineGlasanje.csproj", "{BC49C175-F865-4E8E-B394-2CD91614A996}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UnitTestovi", "UnitTestovi\UnitTestovi.csproj", "{B326D0BD-7639-4932-8125-1FF29AE8E043}"
 EndProject

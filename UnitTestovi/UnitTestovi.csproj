@@ -19,6 +19,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Update="podaci.csv">
     <None Update="Glasaci.csv">
 		<CopyToOutputDirectory>Always</CopyToOutputDirectory>
 	</None>
