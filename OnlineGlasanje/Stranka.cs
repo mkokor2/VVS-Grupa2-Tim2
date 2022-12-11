@@ -13,6 +13,7 @@ namespace OnlineGlasanje
 
         string naziv;
         int brojGlasova;
+        List<Kandidat> rukovodstvoStranke;
 
         #endregion
 
@@ -21,6 +22,7 @@ namespace OnlineGlasanje
 
         public string Naziv { get => naziv; set => naziv = value; }    
         public int BrojGlasova { get => brojGlasova; set => brojGlasova = value; }
+        public List<Kandidat> RukovodstvoStranke { get => rukovodstvoStranke; set => rukovodstvoStranke = value; }
 
         #endregion
 
@@ -31,8 +33,8 @@ namespace OnlineGlasanje
             this.naziv = naziv;
             // Broj glasova se na početku postavlja na 0.
             brojGlasova = 0;
+            rukovodstvoStranke = new List<Kandidat>();
         }
-
         #endregion
 
         #region Metode

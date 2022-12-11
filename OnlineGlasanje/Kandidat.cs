@@ -11,6 +11,10 @@
 using System;
 using System.Collections.Generic;
 
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
 namespace OnlineGlasanje
 {
     public class Kandidat
@@ -35,6 +39,7 @@ namespace OnlineGlasanje
         public string Prezime { get => prezime; set => prezime = value; }
         public Stranka TrenutnaStranka { get => trenutnaStranka; set => trenutnaStranka = value; } 
         public int BrojGlasova { get => brojGlasova; set => brojGlasova = value; }
+        public string MatičniBroj { get => matičniBroj; set => matičniBroj = value; }
 
         // Funkcionalnost 2 (AUTOR: Matija Kokor)
         public List<EvidencijaČlanstva> EvidencijeČlanstava { get => evidencijeČlanstava; set => evidencijeČlanstava = value; }
