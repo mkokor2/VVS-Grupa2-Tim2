@@ -14,7 +14,7 @@ using System.Linq;
  * 18702
  */
 
-namespace UnitTest
+namespace UnitTestovi
 {
     [TestClass]
     public class GlasacTest

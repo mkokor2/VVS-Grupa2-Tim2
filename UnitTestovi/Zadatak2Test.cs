@@ -11,7 +11,7 @@ using System.Threading.Tasks;
  * 18702
  */
 
-namespace UnitTest
+namespace UnitTestovi
 {
     [TestClass]
     public class Zadatak2Test
