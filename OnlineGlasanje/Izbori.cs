@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -207,19 +208,15 @@ namespace OnlineGlasanje
         {
             var lista = DajClanoveRukovodstvaStrankeKojiSuOsvojiliMandate(stranka);
             int ukupanBrojGlasova = DajGlasoveRukovodstvaStranke(stranka);
-            string ispis = "Ukupan broj glasova: " + ukupanBrojGlasova + "; Kandidati: ";
-            for (int i = 0; i < lista.Count; i++)
-            {
-                for (int j = 0; j < glasači.Count; j++)
-                {
-                    if (lista[i].MatičniBroj.Equals(glasači[j].MatičniBroj))
-                    {
-                        if (i == lista.Count - 1) { ispis += "Identifikacioni broj: " + glasači[j].Id; }
 
-                        else { ispis += "Identifikacioni broj: " + glasači[j].Id + ","; }
-                    }
-                }
-            }
+            IEnumerable<string> IDKandidata = (from g in glasači
+                                  join ruk in lista on g.MatičniBroj equals ruk.MatičniBroj
+                                  select g.MatičniBroj);
+
+            string ispis = "Ukupan broj glasova: " + ukupanBrojGlasova + "; ID Kandidata: ";
+
+            ispis += string.Join(", ", IDKandidata);
+
             return ispis;
         }
 
