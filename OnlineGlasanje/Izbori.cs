@@ -173,12 +173,16 @@ namespace OnlineGlasanje
             });
             return kandidati;
         }
+
         //metodu napisao Admir Mehmedagić u sklopu funkcionalnosti 4
         public List<Kandidat> DajRukovodioceStranke(Stranka stranka)
         {
             List<Kandidat> rukovodiociStranke = new List<Kandidat>();
-            foreach (Kandidat kandidat in Kandidati)
-                if (kandidat.TrenutnaStranka != null && kandidat.TrenutnaStranka.Naziv.Equals(stranka.Naziv) && kandidat.TrenutnaStranka.RukovodstvoStranke.Contains(kandidat))
+
+            var kandidatiStranke = DajKandidateStranke(stranka);
+
+            foreach (Kandidat kandidat in kandidatiStranke)
+                if (kandidat.TrenutnaStranka.RukovodstvoStranke.Contains(kandidat))
                     rukovodiociStranke.Add(kandidat);
             return rukovodiociStranke;
         }
