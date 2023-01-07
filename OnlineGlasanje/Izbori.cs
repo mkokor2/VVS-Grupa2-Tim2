@@ -96,12 +96,12 @@ namespace OnlineGlasanje
 
         public List<Kandidat> DajKandidateStranke(Stranka stranka, List<int> redniBrojeviKandidata)
         {
-            List<Kandidat> izabraniKandidati = new List<Kandidat>();
+            HashSet<Kandidat> izabraniKandidati = new HashSet<Kandidat>();
             List<Kandidat> sviKandidati = DajKandidateStranke(stranka);
             for (int i = 0; i < sviKandidati.Count; i++)
-                if (!izabraniKandidati.Contains(sviKandidati[i]) && redniBrojeviKandidata.Contains(i + 1))
+                if (redniBrojeviKandidata.Contains(i + 1))
                     izabraniKandidati.Add(sviKandidati[i]);
-            return izabraniKandidati;
+            return izabraniKandidati.ToList();
         }
 
         public List<Kandidat> DajKandidateStranke(Stranka stranka)

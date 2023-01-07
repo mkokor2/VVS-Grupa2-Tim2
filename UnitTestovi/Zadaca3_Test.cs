@@ -16,44 +16,27 @@ namespace UnitTestovi
     [TestClass]
     public class Zadaca3Test
     {
-        //DajRukovodioceStranke
         [TestMethod]
-        public void TestZamjenskiObjekat()
+        public void CodeTuningTest()
         {
-            Stranka stranka = new Stranka("Testna Stranka");
-
-            IList<Kandidat> kandidati = new List<Kandidat>();
-
-            for (var i = 0; i < 100000; ++i)
-            {
-                Kandidat k = new Kandidat($"Nezavisni-{i}", $"Nezavisni-{i}", null);
-                kandidati.Add(k);
-
-                k = new Kandidat($"Zavisni-{i}", $"Zavisni-{i}", stranka);
-                kandidati.Add(k);
-            }
-
             Izbori izbori = new Izbori();
+            Stranka testnaStranka = new Stranka("Testna stranka");
 
-            foreach(Kandidat k in kandidati)
-            {
-                //dodaj kandidata predugo traje jer poziva svaki put contains
-                izbori.Kandidati.Add(k);
-            }
+            izbori.Stranke.Add(testnaStranka);
 
-            //pola kandidata je u rukovodstvu
-            for (var i = 1; i < kandidati.Count(); i += 2)
-            {
-                stranka.RukovodstvoStranke.Add(kandidati.ElementAt(i));
-            }
+            for (int i = 0; i < 100000; i++)
+                izbori.Kandidati.Add(new Kandidat($"Ime {i}", $"Prezime {i}", testnaStranka));
 
-            var rukovodiociStranke = izbori.DajRukovodioceStranke(stranka);
+            List<int> izabraniKandidati = new List<int>();
 
-            //za svaki slucaj da GC ne pokupi rukovodiociStranke
-            foreach(Kandidat rs in rukovodiociStranke)
-            {
-                Console.WriteLine(rs);
-            }
+            for (int i = 0; i < 100000; i += 2)
+                izabraniKandidati.Add(i + 1);
+
+            int prviBreakpoint = 0;
+
+            izbori.DajKandidateStranke(testnaStranka, izabraniKandidati);
+
+            int drugiBreakpoint = 0;
 
             Assert.IsTrue(true);
         }
