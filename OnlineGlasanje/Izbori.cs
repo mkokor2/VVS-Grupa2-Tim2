@@ -98,9 +98,8 @@ namespace OnlineGlasanje
         {
             HashSet<Kandidat> izabraniKandidati = new HashSet<Kandidat>();
             List<Kandidat> sviKandidati = DajKandidateStranke(stranka);
-            for (int i = 0; i < sviKandidati.Count; i++)
-                if (redniBrojeviKandidata.Contains(i + 1))
-                    izabraniKandidati.Add(sviKandidati[i]);
+            for (int i = 0; i < redniBrojeviKandidata.Count; i++)
+                    izabraniKandidati.Add(sviKandidati[redniBrojeviKandidata[i]-1]);
             return izabraniKandidati.ToList();
         }
 
