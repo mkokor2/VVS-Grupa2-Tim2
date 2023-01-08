@@ -109,6 +109,37 @@ namespace OnlineGlasanje
             foreach (Kandidat kandidat in Kandidati)
                 if (kandidat.TrenutnaStranka != null && kandidat.TrenutnaStranka.Naziv.Equals(stranka.Naziv))
                     kandidatiStranke.Add(kandidat);
+
+            int i = 0;
+            for (; i < Kandidati.Count - 4; i += 4)
+            {
+                Kandidat kandidat1 = Kandidati[i];
+                Kandidat kandidat2 = Kandidati[i+1];
+                Kandidat kandidat3 = Kandidati[i+2];
+                Kandidat kandidat4 = Kandidati[i+3];
+
+                if (kandidat1.TrenutnaStranka != null && kandidat1.TrenutnaStranka.Naziv.Equals(stranka.Naziv))
+                    kandidatiStranke.Add(kandidat1);
+
+                if (kandidat2.TrenutnaStranka != null && kandidat2.TrenutnaStranka.Naziv.Equals(stranka.Naziv))
+                    kandidatiStranke.Add(kandidat2);
+
+                if (kandidat3.TrenutnaStranka != null && kandidat3.TrenutnaStranka.Naziv.Equals(stranka.Naziv))
+                    kandidatiStranke.Add(kandidat3);
+
+                if (kandidat4.TrenutnaStranka != null && kandidat4.TrenutnaStranka.Naziv.Equals(stranka.Naziv))
+                    kandidatiStranke.Add(kandidat4);
+            }
+
+            //ako Kandidati.Count nije djeljiv sa 4
+            while (i < Kandidati.Count)
+            {
+                Kandidat kandidat = Kandidati[i++];
+
+                if (kandidat.TrenutnaStranka != null && kandidat.TrenutnaStranka.Naziv.Equals(stranka.Naziv))
+                    kandidatiStranke.Add(kandidat);
+            }
+
             return kandidatiStranke;
         }
 
