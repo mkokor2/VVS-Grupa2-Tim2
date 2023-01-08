@@ -161,9 +161,24 @@ namespace OnlineGlasanje
 
         #region Pomocne Metode
 
+        //metodu dodala Nikolina Kokor u svrhu refactoringa metode generisiID
+        public string generisiDioSaSlovima(string ime, string prezime, string adresa)
+        {
+            string generisani = ime.Substring(0, 2) + prezime.Substring(0, 2) + adresa.Substring(0, 2);
+            return generisani;
+        }
+        //metodu dodala Nikolina Kokor u svrhu refactoringa metode generisiID
+        public string generisiDioSaBrojevima(DateTime datum, string brojLicne, string maticniBroj)
+        {
+            string generisani = datum.ToString("MM/dd/yyyy").Substring(0, 2) +
+            brojLicne.Substring(0, 2) + maticniBroj.Substring(0, 2);
+            return generisani;
+
+        }
+
         public string generisiID(string ime, string prezime, string adresa, DateTime datum, string brojLicneKarte, string maticniBroj)
         {
-            string id = ime.Substring(0, 2) + prezime.Substring(0, 2) + adresa.Substring(0, 2) + datum.ToString("MM/dd/yyyy").Substring(0, 2) + brojLicneKarte.Substring(0, 2) + matičniBroj.Substring(0, 2);
+            string id = generisiDioSaSlovima(ime, prezime, adresa) + generisiDioSaBrojevima(datum, brojLicneKarte, maticniBroj);
             return id;
         }
 
