@@ -98,8 +98,13 @@ namespace OnlineGlasanje
         {
             HashSet<Kandidat> izabraniKandidati = new HashSet<Kandidat>();
             List<Kandidat> sviKandidati = DajKandidateStranke(stranka);
+            redniBrojeviKandidata.Sort();
             for (int i = 0; i < redniBrojeviKandidata.Count; i++)
-                    izabraniKandidati.Add(sviKandidati[redniBrojeviKandidata[i]-1]);
+            {
+                if (redniBrojeviKandidata[i] > sviKandidati.Count)
+                    break;
+                izabraniKandidati.Add(sviKandidati[redniBrojeviKandidata[i] - 1]);
+            }
             return izabraniKandidati.ToList();
         }
 
@@ -139,6 +144,7 @@ namespace OnlineGlasanje
                 if (kandidat.TrenutnaStranka != null && kandidat.TrenutnaStranka.Naziv.Equals(stranka.Naziv))
                     kandidatiStranke.Add(kandidat);
             }
+           
 
             return kandidatiStranke;
         }
@@ -266,6 +272,7 @@ namespace OnlineGlasanje
                     ispis += kandidatiSMandatom[i].Ime + " " + kandidatiSMandatom[i].Prezime + kandidatiSMandatom[i].BrojGlasova + "glasova, što je " + postotak + "%\n";
 
                 }
+               
                 return ispis;
             }
 
